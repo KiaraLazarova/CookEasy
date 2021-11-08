@@ -1,0 +1,66 @@
+/* Carousel styling */
+#introCarousel,
+.carousel-inner,
+.carousel-item,
+.carousel-item.active {
+    height: 100vh;
+}
+
+.carousel-item:nth-child(1) {
+    background-image: url(../img/first_image_carousel.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.carousel-item:nth-child(2) {
+    background-image: url(../img/second_image_carousel.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.carousel-item:nth-child(3) {
+    background-image: url(../img/third_image_carousel.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.mask {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Height for devices larger than 576px */
+@media (min-width: 992px) {
+    #introCarousel {
+        margin-top: -58.59px;
+    }
+}
+
+/* Navbar */
+.navbar {
+    z-index: 2000;
+}
+
+.navbar .nav-link {
+    color: #fff !important;
+}
+
+/* Sign in button */
+#btn-sign-in {
+    font-size: 14px;
+}
+
+/* Custom pink buttons - index page */
+.custom-pink-btn {
+    border: 2px solid #f58b8d; !important;
+    color: #f58b8d; !important;
+    background-color: white; !important;
+}
+
+.custom-pink-btn:hover {
+    border: 2px solid #f58b8d; !important;
+    background-color: #f58b8d; !important;
+    color: white; !important;
+}
