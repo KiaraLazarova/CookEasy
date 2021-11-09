@@ -1,10 +1,10 @@
-package course.springadvanced.finalproject;
+package course.springadvanced.cookeasy;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FinalProjectApplicationTests {
+class CookEasyApplicationTests {
 
     @Test
     void contextLoads() {

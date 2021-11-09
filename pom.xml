@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>course.springadvanced</groupId>
-    <artifactId>final-project</artifactId>
+    <artifactId>cook-easy</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>final-project</name>
-    <description>final-project</description>
+    <name>cook-easy</name>
+    <description>Cook Easy Web Application</description>
     <properties>
         <java.version>15</java.version>
     </properties>
