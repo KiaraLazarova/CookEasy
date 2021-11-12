@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head">
+</head>
+
+<body>
+  <!--Main Navigation-->
+  <header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" th:replace="fragments/navbar :: navbar">
+    </nav>
+    <!-- Navbar -->
+
+    <!-- Background image -->
+    <div id="intro" class="shadow-2-strong">
+      <div class="mask d-flex align-items-center h-100">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-5 col-md-8 mt-5">
+              <form class="bg-white rounded shadow-5-strong p-5">
+                <h4 class="mb-5 text-center"><strong>Create your awesome account</strong></h4>
+                <!-- 2 column grid layout with text inputs for the first and last names -->
+                <div class="row mb-4">
+                  <!-- First name input -->
+                  <div class="col">
+                    <div class="form-outline">
+                      <input type="text" id="firstName" class="form-control" />
+                      <label class="form-label" for="firstName">First name</label>
+                    </div>
+                  </div>
+                  <!-- Last name input -->
+                  <div class="col">
+                    <div class="form-outline">
+                      <input type="text" id="lastName" class="form-control" />
+                      <label class="form-label" for="lastName">Last name</label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Username input -->
+                <div class="form-outline mb-4">
+                  <input type="text" id="username" class="form-control" />
+                  <label class="form-label" for="username">Username</label>
+                </div>
+
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                  <input type="text" id="email" class="form-control" />
+                  <label class="form-label" for="email">Email</label>
+                </div>
+
+                <!-- 2 column grid layout with text inputs for the first and last names -->
+                <div class="row mb-4">
+                  <!-- Password input -->
+                  <div class="col">
+                    <div class="form-outline">
+                      <input type="text" id="password" class="form-control" />
+                      <label class="form-label" for="password">Password</label>
+                    </div>
+                  </div>
+                  <!-- Confirm password input -->
+                  <div class="col">
+                    <div class="form-outline">
+                      <input type="text" id="confirmPassword" class="form-control" />
+                      <label class="form-label" for="confirmPassword">Confirm password</label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 2 column grid layout with select inputs for the gender and level name enums -->
+                <div class="row mb-4">
+                  <!-- Gender select input -->
+                  <div class="col">
+                    <div class="form-outline">
+                      <select id="gender" class="browser-default custom-select form-select" aria-describedby="genderHelpInline">
+                      <option value="" disabled selected>Choose gender</option>
+                      <option th:each="genderName : ${T(course.springadvanced.cookeasy.model.entity.enumeration.GenderNameEnum).values()}"
+                              th:value="${genderName}" th:text="${#strings.toLowerCase(genderName)}"></option>
+                      </select>
+                      <small id="genderHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                        You must select the gender.
+                      </small>
+                    </div>
+                  </div>
+                  <!-- Level select input -->
+                  <div class="col">
+                    <div class="form-outline">
+                      <select id="level" class="browser-default custom-select form-select" aria-describedby="levelHelpInline">
+                      <option value="" disabled selected>Choose level</option>
+                      <option th:each="levelName : ${T(course.springadvanced.cookeasy.model.entity.enumeration.LevelNameEnum).values()}"
+                              th:value="${levelName}" th:text="${#strings.toLowerCase(levelName)}"></option>
+                      </select>
+                      <small id="levelHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                        You must select the level.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block mb-4 custom-pink-btn">Sign up</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Background image -->
+  </header>
+  <!--Main Navigation-->
+
+  <!--Footer-->
+  <footer class="bg-light text-lg-start" th:replace="fragments/footer :: footer">
+  </footer>
+  <!--Footer-->
+
+    <!-- MDB script -->
+    <script type="text/javascript" src="/js/mdb.min.js"></script>
+</body>
+
+</html>
