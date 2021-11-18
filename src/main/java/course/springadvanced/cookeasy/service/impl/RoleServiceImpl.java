@@ -25,9 +25,14 @@ public class RoleServiceImpl implements RoleService {
 
         this.roleRepository.saveAndFlush(user);
 
-        RoleEntity administrator = new RoleEntity();
-        administrator.setRoleNameEnum(RoleNameEnum.ADMINISTRATOR);
+        RoleEntity admin = new RoleEntity();
+        admin.setRoleNameEnum(RoleNameEnum.ADMIN);
 
-        this.roleRepository.saveAndFlush(administrator);
+        this.roleRepository.saveAndFlush(admin);
+    }
+
+    @Override
+    public RoleEntity findRoleByRoleName(RoleNameEnum roleNameEnum) {
+        return this.roleRepository.findByRoleNameEnum(roleNameEnum);
     }
 }

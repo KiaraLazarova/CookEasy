@@ -35,4 +35,9 @@ public class LevelServiceImpl implements LevelService {
 
         this.levelRepository.saveAndFlush(advanced);
     }
+
+    @Override
+    public LevelEntity findLevelByLevelName(LevelNameEnum levelNameEnum) {
+        return this.levelRepository.findByLevelNameEnum(levelNameEnum);
+    }
 }

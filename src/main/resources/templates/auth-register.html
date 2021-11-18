@@ -19,21 +19,23 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-xl-5 col-md-8 mt-5">
-              <form class="bg-white rounded shadow-5-strong p-5">
-                <h4 class="mb-5 text-center"><strong>Create your awesome account</strong></h4>
+              <!-- MY NOTE: If you want to lessen the height of the form, change p-5 class to p-4 class -->
+              <!-- MY NOTE: If you want to add CUSTOM validation, add novalidate attribute to the form tag -->
+              <form th:object="${bindingModel}" th:action="@{/users/register}" th:method="POST" id="registerForm" class="bg-white rounded shadow-5-strong p-4 needs-validation">
+                <h4 class="mb-4 text-center"><strong>Create your awesome account</strong></h4>
                 <!-- 2 column grid layout with text inputs for the first and last names -->
                 <div class="row mb-4">
                   <!-- First name input -->
                   <div class="col">
                     <div class="form-outline">
-                      <input type="text" id="firstName" class="form-control" />
+                      <input th:field="*{firstName}" type="text" id="firstName" class="form-control" />
                       <label class="form-label" for="firstName">First name</label>
                     </div>
                   </div>
                   <!-- Last name input -->
                   <div class="col">
                     <div class="form-outline">
-                      <input type="text" id="lastName" class="form-control" />
+                      <input th:field="*{lastName}" type="text" id="lastName" class="form-control" required minlength="5" maxlength="12" aria-describedby="lastNameHelpInline" />
                       <label class="form-label" for="lastName">Last name</label>
                     </div>
                   </div>
@@ -41,29 +43,29 @@
 
                 <!-- Username input -->
                 <div class="form-outline mb-4">
-                  <input type="text" id="username" class="form-control" />
+                  <input th:field="*{username}" type="text" id="username" class="form-control" required minlength="5" maxlength="20" aria-describedby="usernameHelpInline" />
                   <label class="form-label" for="username">Username</label>
                 </div>
 
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                  <input type="text" id="email" class="form-control" />
+                  <input th:field="*{email}" type="email" id="email" class="form-control" required minlength="5" maxlength="30" aria-describedby="emailHelpInline" />
                   <label class="form-label" for="email">Email</label>
                 </div>
 
-                <!-- 2 column grid layout with text inputs for the first and last names -->
+                <!-- 2 column grid layout with text inputs for the password and confirm password -->
                 <div class="row mb-4">
                   <!-- Password input -->
                   <div class="col">
                     <div class="form-outline">
-                      <input type="text" id="password" class="form-control" />
+                      <input th:field="*{password}" type="password" id="password" class="form-control" required minlength="5" maxlength="20" aria-describedby="passwordHelpInline" />
                       <label class="form-label" for="password">Password</label>
                     </div>
                   </div>
                   <!-- Confirm password input -->
                   <div class="col">
                     <div class="form-outline">
-                      <input type="text" id="confirmPassword" class="form-control" />
+                      <input th:field="*{confirmPassword}" type="password" id="confirmPassword" class="form-control" required minlength="5" maxlength="20" aria-describedby="confirmPasswordHelpInline" />
                       <label class="form-label" for="confirmPassword">Confirm password</label>
                     </div>
                   </div>
@@ -74,33 +76,43 @@
                   <!-- Gender select input -->
                   <div class="col">
                     <div class="form-outline">
-                      <select id="gender" class="browser-default custom-select form-select" aria-describedby="genderHelpInline">
-                      <option value="" disabled selected>Choose gender</option>
-                      <option th:each="genderName : ${T(course.springadvanced.cookeasy.model.entity.enumeration.GenderNameEnum).values()}"
-                              th:value="${genderName}" th:text="${#strings.toLowerCase(genderName)}"></option>
+                      <select th:field="*{genderNameEnum}" id="gender" class="browser-default custom-select form-select" required aria-describedby="genderHelpInline">
+                        <option value="" selected>Choose gender</option>
+                        <option th:each="gender : ${T(course.springadvanced.cookeasy.model.entity.enumeration.GenderNameEnum).values()}"
+                              th:value="${gender}" th:text="${#strings.toLowerCase(gender)}"></option>
                       </select>
-                      <small id="genderHelpInline" class="invalid-feedback bg-danger text-light rounded">
-                        You must select the gender.
-                      </small>
                     </div>
                   </div>
                   <!-- Level select input -->
                   <div class="col">
                     <div class="form-outline">
-                      <select id="level" class="browser-default custom-select form-select" aria-describedby="levelHelpInline">
-                      <option value="" disabled selected>Choose level</option>
-                      <option th:each="levelName : ${T(course.springadvanced.cookeasy.model.entity.enumeration.LevelNameEnum).values()}"
-                              th:value="${levelName}" th:text="${#strings.toLowerCase(levelName)}"></option>
+                      <select th:field="*{levelNameEnum}" id="level" class="browser-default custom-select form-select" required aria-describedby="levelHelpInline">
+                        <option value="" selected>Choose level</option>
+                        <option th:each="level : ${T(course.springadvanced.cookeasy.model.entity.enumeration.LevelNameEnum).values()}"
+                              th:value="${level}" th:text="${#strings.toLowerCase(level)}"></option>
                       </select>
-                      <small id="levelHelpInline" class="invalid-feedback bg-danger text-light rounded">
-                        You must select the level.
-                      </small>
                     </div>
                   </div>
                 </div>
 
+                <div th:if="${usernameOccupied || emailOccupied}">
+                  <p th:if="${usernameOccupied and !emailOccupied}" class="text-danger text-center custom-line-height">
+                    <strong>This username is already taken.</strong>
+                  </p>
+
+                  <p th:if="${emailOccupied and !usernameOccupied}" class="text-danger text-center custom-line-height">
+                    <strong>This email is already taken.</strong>
+                  </p>
+
+                  <p th:if="${usernameOccupied and emailOccupied}" class="text-danger text-center custom-line-height">
+                    <strong>These username and email are already taken.</strong>
+                  </p>
+                </div>
+
+                <p class="text-center">Already have an account? <a th:href="@{/users/login}">Sign in right here!</a></p>
+
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-primary btn-block mb-4 custom-pink-btn">Sign up</button>
+                <button type="submit" class="btn btn-block mb-3 custom-pink-btn">Sign up</button>
               </form>
             </div>
           </div>
@@ -118,6 +130,8 @@
 
     <!-- MDB script -->
     <script type="text/javascript" src="/js/mdb.min.js"></script>
+    <!-- Custom script -->
+    <script type="text/javascript" src="/js/script.js"></script>
 </body>
 
 </html>

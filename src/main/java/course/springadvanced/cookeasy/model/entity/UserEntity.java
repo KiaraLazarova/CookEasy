@@ -1,6 +1,8 @@
 package course.springadvanced.cookeasy.model.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -12,13 +14,13 @@ public class UserEntity extends BaseEntity {
     private String password;
     private String email;
     private GenderEntity genderEntity;
-    private RoleEntity roleEntity;
     private LevelEntity levelEntity;
-    private Set<RecipeEntity> addedRecipes;
-    private Set<RecipeEntity> likedRecipes;
-    private Set<RecipeEntity> savedRecipes;
-    private Set<RecipeEntity> cookedRecipes;
-    private Set<RecipeEntity> commentedRecipes;
+    private Set<RoleEntity> roles = new HashSet<>();
+    private Set<RecipeEntity> addedRecipes = new HashSet<>();
+    private Set<RecipeEntity> likedRecipes = new HashSet<>();
+    private Set<RecipeEntity> savedRecipes = new HashSet<>();
+    private Set<RecipeEntity> cookedRecipes = new HashSet<>();
+    private Set<RecipeEntity> commentedRecipes = new HashSet<>();
 
     public UserEntity() {
     }
@@ -79,16 +81,6 @@ public class UserEntity extends BaseEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
-    public RoleEntity getRoleEntity() {
-        return this.roleEntity;
-    }
-
-    public void setRoleEntity(RoleEntity roleEntity) {
-        this.roleEntity = roleEntity;
-    }
-
-    @ManyToOne
     @JoinColumn(name = "level_id", referencedColumnName = "id")
     public LevelEntity getLevelEntity() {
         return this.levelEntity;
@@ -96,6 +88,18 @@ public class UserEntity extends BaseEntity {
 
     public void setLevelEntity(LevelEntity levelEntity) {
         this.levelEntity = levelEntity;
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    public Set<RoleEntity> getRoles() {
+        return this.roles;
+    }
+
+    public void setRoles(Set<RoleEntity> roles) {
+        this.roles = roles;
     }
 
     @OneToMany(mappedBy = "author", targetEntity = RecipeEntity.class, fetch = FetchType.EAGER)

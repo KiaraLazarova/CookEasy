@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 </head>
 <body>
@@ -15,17 +15,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarExample01">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
                     <a class="nav-link" th:href="@{/users/login}">Login</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
                     <a class="nav-link" th:href="@{/users/register}">Register</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="isAuthenticated()">
                     <a class="nav-link" href="/"><i class="fas fa-hamburger"></i>&nbsp; Add new recipe</a>
                 </li>
                 <!-- Dropdown -->
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                     <a
                             class="nav-link dropdown-toggle"
                             id="navbarDropdown1"
@@ -44,11 +44,11 @@
                         <li><a class="dropdown-item" href="#"><i class="far fa-comments"></i>&nbsp; Commented recipes</a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="isAuthenticated()">
                     <a class="nav-link" href="/"><i class="far fa-user"></i>&nbsp; Profile</a>
                 </li>
                 <!-- Dropdown -->
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
                     <a
                             class="nav-link dropdown-toggle"
                             id="navbarDropdown"
@@ -56,7 +56,7 @@
                             data-mdb-toggle="dropdown"
                             aria-expanded="false"
                     >
-                        Administrator
+                        Admin
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#"><i class="fas fa-users"></i>&nbsp; Edit users</a></li>
@@ -71,34 +71,41 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/"><i class="fas fa-phone"></i>&nbsp; Contact us</a>
                 </li>
-                <!--<li class="nav-item">
-                    <a class="nav-link" href="/"><i class="fas fa-globe-europe"></i>&nbsp; Greeting</a>
-                </li>-->
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Logout</a>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" href="/"><i class="fas fa-globe-europe"></i>&nbsp; Quote</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <form th:action="@{/users/logout}" th:method="POST">
+                        <button type="submit" class="btn btn-block custom-transparent-btn">
+                            Welcome,
+                            <th:block th:utext="${#authentication.getPrincipal().getGenderEntity().getGenderNameEnum().name()} == 'MALE' ? 'Mr.' : 'Ms.'"></th:block>
+                            <th:block th:text="${#authentication.principal.getLastName()}"></th:block>!
+                            &nbsp; <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </form>
                 </li>
             </ul>
 
             <ul class="navbar-nav list-inline">
                 <!-- Icons -->
                 <li class="">
-                    <a class="nav-link" href="https://www.youtube.com/channel/UC5CF7mLQZhvx8O5GODZAhdA" rel="nofollow"
+                    <a class="nav-link" href="https://www.youtube.com/user/CookEasyWebApp" rel="nofollow"
                        target="_blank">
                         <i class="fab fa-youtube"></i>
                     </a>
                 </li>
                 <li class="">
-                    <a class="nav-link" href="https://www.facebook.com/mdbootstrap" rel="nofollow" target="_blank">
+                    <a class="nav-link" href="https://www.facebook.com/CookEasyWebApp" rel="nofollow" target="_blank">
                         <i class="fab fa-facebook-f"></i>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://twitter.com/MDBootstrap" rel="nofollow" target="_blank">
+                    <a class="nav-link" href="https://twitter.com/CookEasyWebApp" rel="nofollow" target="_blank">
                         <i class="fab fa-twitter"></i>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://github.com/mdbootstrap/mdb-ui-kit" rel="nofollow" target="_blank">
+                    <a class="nav-link" href="https://github.com/KiaraLazarova/cook-easy" rel="nofollow" target="_blank">
                         <i class="fab fa-github"></i>
                     </a>
                 </li>

@@ -19,22 +19,25 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-xl-5 col-md-8 mt-5">
-              <form class="bg-white rounded shadow-5-strong p-5">
+              <!-- MY NOTE: If you want to lessen the height of the form, change p-5 class to p-4 class -->
+              <form th:action="@{/users/login}" th:method="POST" class="bg-white rounded shadow-5-strong p-4">
                 <h4 class="mb-5 text-center"><strong>Sign in your awesome account</strong></h4>
                 <!-- Username input -->
                 <div class="form-outline mb-4">
-                  <input type="text" id="username" class="form-control" />
+                  <input type="text" id="username" name="username" class="form-control" required minlength="5" maxlength="20" />
                   <label class="form-label" for="username">Username</label>
                 </div>
 
                 <!-- Password input -->
                 <div class="form-outline mb-4">
-                  <input type="password" id="password" class="form-control" />
+                  <input type="password" id="password" name="password" class="form-control" required minlength="5" maxlength="20" />
                   <label class="form-label" for="password">Password</label>
                 </div>
 
+                <p class="text-center">Don't have an account yet? <a th:href="@{/users/register}">Sign up right here!</a></p>
+
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-primary btn-block custom-pink-btn">Sign in</button>
+                <button type="submit" class="btn btn-block custom-pink-btn">Sign in</button>
               </form>
             </div>
           </div>

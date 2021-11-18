@@ -30,4 +30,9 @@ public class GenderServiceImpl implements GenderService {
 
         this.genderRepository.saveAndFlush(female);
     }
+
+    @Override
+    public GenderEntity findGenderByGenderName(GenderNameEnum genderNameEnum) {
+        return this.genderRepository.findByGenderNameEnum(genderNameEnum);
+    }
 }

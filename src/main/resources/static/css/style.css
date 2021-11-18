@@ -52,7 +52,7 @@
     font-size: 14px;
 }
 
-/* Custom pink buttons - index page */
+/* Custom pink buttons */
 .custom-pink-btn {
     border: 2px solid #f58b8d; !important;
     color: #f58b8d; !important;
@@ -75,4 +75,22 @@
 #intro {
     background-image: linear-gradient(to right, #9AD1E6, #f58b8d);
     height: 100vh;
+}
+
+/* Custom transparent buttons - navbar */
+.custom-transparent-btn {
+    border: 2px solid white; !important;
+    color: white; !important;
+    background-color: rgba(0, 0, 0, 0); !important;
+}
+
+.custom-transparent-btn:hover {
+    border: 2px solid white; !important;
+    color: white; !important;
+    background-color: rgba(0, 0, 0, 0); !important;
+}
+
+/* Custom line height validation messages - auth-register page */
+.custom-line-height {
+    line-height: 0.5; !important;
 }
