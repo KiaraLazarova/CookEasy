@@ -33,7 +33,8 @@ public class CommentEntity extends BaseEntity {
         this.createdOn = createdOn;
     }
 
-    @Column(name = "content", nullable = false)
+    @Lob
+    @Column(name = "content", columnDefinition = "TEXT", nullable = false)
     public String getContent() {
         return content;
     }

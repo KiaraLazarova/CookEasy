@@ -25,7 +25,7 @@ public class UserEntity extends BaseEntity {
     public UserEntity() {
     }
 
-    @Column(name = "username", nullable = false, unique = true)
+    @Column(name = "username", length = 20, nullable = false, unique = true)
     public String getUsername() {
         return this.username;
     }
@@ -43,7 +43,7 @@ public class UserEntity extends BaseEntity {
         this.firstName = firstName;
     }
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name", length = 12, nullable = false)
     public String getLastName() {
         return this.lastName;
     }
@@ -61,7 +61,7 @@ public class UserEntity extends BaseEntity {
         this.password = password;
     }
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", length = 30, nullable = false, unique = true)
     public String getEmail() {
         return this.email;
     }

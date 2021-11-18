@@ -47,7 +47,8 @@ public class RecipeEntity extends BaseEntity {
         this.preparationTime = preparationTime;
     }
 
-    @Column(name = "description", nullable = false)
+    @Lob
+    @Column(name = "description", columnDefinition = "LONGTEXT", nullable = false)
     public String getDescription() {
         return this.description;
     }
