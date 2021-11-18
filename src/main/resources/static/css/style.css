@@ -33,7 +33,7 @@
 
 /* Height for devices larger than 576px */
 @media (min-width: 992px) {
-    #introCarousel, #intro {
+    #introCarousel, #intro, #introHalf {
         margin-top: -58.59px;
     }
 }
@@ -93,4 +93,17 @@
 /* Custom line height validation messages - auth-register page */
 .custom-line-height {
     line-height: 0.5; !important;
+}
+
+/* Half intro gradient background - home page */
+#introHalf {
+    background-image: linear-gradient(to right, #9AD1E6, #f58b8d);
+    height: 50vh;
+}
+
+/* Recipe outline - home page */
+.custom-row-outline {
+    border: 3px solid #9AD1E6; !important;
+    border-radius: 5px; !important;
+    padding: 20px; !important;
 }

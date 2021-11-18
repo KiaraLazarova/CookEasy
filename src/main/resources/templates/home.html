@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head">
+</head>
+
+<body>
+        <!--Main Navigation-->
+    <header>
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" th:replace="fragments/navbar :: navbar">
+      </nav>
+      <!-- Navbar -->
+
+      <!-- Background image -->
+      <div id="introHalf" class="bg-image shadow-2-strong">
+        <div class="mask">
+          <div class="container d-flex justify-content-center align-items-center h-100">
+            <div class="text-white text-center">
+              <br>
+              <br>
+              <h1 class="mb-3">Recipes</h1>
+              <h5 class="mb-4">You want to add a recipe? No problem - just click the button below.</h5>
+              <a class="btn btn-outline-light btn-lg m-2" href="/" role="button">Create new recipe</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Background image -->
+    </header>
+    <!--Main Navigation-->
+
+    <!--Main layout-->
+    <main class="mt-5">
+      <div class="container">
+        <!--Section: Content-->
+        <section class="text-center">
+          <!-- Recipe -->
+          <div class="row custom-row-outline">
+            <div class="col-md-4 mb-4">
+              <div class="bg-image hover-overlay shadow-1-strong rounded ripple" data-mdb-ripple-color="light">
+                <img src="https://mdbootstrap.com/img/new/standard/nature/002.jpg" class="img-fluid" />
+                <a href="#">
+                  <div class="mask"></div>
+                </a>
+              </div>
+            </div>
+
+            <div class="col-md-8 mb-4">
+              <h4><strong>Recipe title</strong></h4>
+              <br>
+              <p class="custom-text-justify">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus ratione
+                necessitatibus itaque error alias repellendus nemo reiciendis aperiam quisquam minus
+                ipsam reprehenderit commodi ducimus, in dicta aliquam eveniet dignissimos magni.
+              </p>
+              <a type="button" class="btn custom-pink-btn" href="/">Read more</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <!--Main layout-->
+
+    <br>
+    <br>
+    <hr class="m-0" />
+
+    <!--Footer-->
+    <footer class="bg-light text-lg-start" th:replace="fragments/footer :: footer">
+    </footer>
+    <!--Footer-->
+
+    <!-- MDB -->
+    <script type="text/javascript" src="/js/mdb.min.js"></script>
+
+</body>
+</html>
