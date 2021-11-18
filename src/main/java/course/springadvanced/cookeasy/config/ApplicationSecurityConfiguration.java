@@ -26,7 +26,6 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .requestCache().disable()
                 .authorizeRequests()
                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                     .antMatchers("/", "/users/register", "/users/login", "/about").permitAll()

@@ -24,7 +24,7 @@
                 <h4 class="mb-4 text-center"><strong>Sign in your awesome account</strong></h4>
                 <!-- Username input -->
                 <div class="form-outline mb-4">
-                  <input type="text" id="username" name="username" class="form-control" required minlength="5" maxlength="20" />
+                  <input th:value="${username}" type="text" id="username" name="username" class="form-control" required minlength="5" maxlength="20" />
                   <label class="form-label" for="username">Username</label>
                 </div>
 
@@ -33,6 +33,10 @@
                   <input type="password" id="password" name="password" class="form-control" required minlength="5" maxlength="20" />
                   <label class="form-label" for="password">Password</label>
                 </div>
+
+                <p th:if="${badCredentials}" class="text-danger text-center custom-line-height">
+                  <strong>Invalid username or password.</strong>
+                </p>
 
                 <p class="text-center">Don't have an account yet? <a th:href="@{/users/register}">Sign up right here!</a></p>
 
