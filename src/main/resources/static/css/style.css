@@ -65,6 +65,19 @@
     color: white; !important;
 }
 
+/* Custom blue buttons */
+.custom-blue-btn {
+    border: 2px solid #65C9FF; !important;
+    color: #65C9FF; !important;
+    background-color: white; !important;
+}
+
+.custom-blue-btn:hover {
+    border: 2px solid #65C9FF; !important;
+    background-color: #65C9FF; !important;
+    color: white; !important;
+}
+
 /* Our history and mission in brief - index page */
 .custom-text-justify {
     text-align: justify; !important;

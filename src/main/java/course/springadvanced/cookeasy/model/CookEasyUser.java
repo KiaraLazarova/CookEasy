@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Set;
 
 public class CookEasyUser extends User {
+    private final Long id;
     private final String firstName;
     private final String lastName;
     private final String email;
@@ -20,8 +21,9 @@ public class CookEasyUser extends User {
     private final Set<RecipeEntity> cookedRecipes;
     private final Set<RecipeEntity> commentedRecipes;
 
-    public CookEasyUser(String username, String password, Collection<? extends GrantedAuthority> authorities, String firstName, String lastName, String email, GenderEntity genderEntity, LevelEntity levelEntity, Set<RecipeEntity> addedRecipes, Set<RecipeEntity> likedRecipes, Set<RecipeEntity> savedRecipes, Set<RecipeEntity> cookedRecipes, Set<RecipeEntity> commentedRecipes) {
+    public CookEasyUser(String username, String password, Collection<? extends GrantedAuthority> authorities, Long id, String firstName, String lastName, String email, GenderEntity genderEntity, LevelEntity levelEntity, Set<RecipeEntity> addedRecipes, Set<RecipeEntity> likedRecipes, Set<RecipeEntity> savedRecipes, Set<RecipeEntity> cookedRecipes, Set<RecipeEntity> commentedRecipes) {
         super(username, password, authorities);
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -34,8 +36,9 @@ public class CookEasyUser extends User {
         this.commentedRecipes = commentedRecipes;
     }
 
-    public CookEasyUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, String firstName, String lastName, String email, GenderEntity genderEntity, LevelEntity levelEntity, Set<RecipeEntity> addedRecipes, Set<RecipeEntity> likedRecipes, Set<RecipeEntity> savedRecipes, Set<RecipeEntity> cookedRecipes, Set<RecipeEntity> commentedRecipes) {
+    public CookEasyUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, Long id, String firstName, String lastName, String email, GenderEntity genderEntity, LevelEntity levelEntity, Set<RecipeEntity> addedRecipes, Set<RecipeEntity> likedRecipes, Set<RecipeEntity> savedRecipes, Set<RecipeEntity> cookedRecipes, Set<RecipeEntity> commentedRecipes) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -46,6 +49,10 @@ public class CookEasyUser extends User {
         this.savedRecipes = savedRecipes;
         this.cookedRecipes = cookedRecipes;
         this.commentedRecipes = commentedRecipes;
+    }
+
+    public Long getId() {
+        return this.id;
     }
 
     public String getFirstName() {
@@ -66,5 +73,25 @@ public class CookEasyUser extends User {
 
     public LevelEntity getLevelEntity() {
         return this.levelEntity;
+    }
+
+    public Set<RecipeEntity> getAddedRecipes() {
+        return this.addedRecipes;
+    }
+
+    public Set<RecipeEntity> getLikedRecipes() {
+        return this.likedRecipes;
+    }
+
+    public Set<RecipeEntity> getSavedRecipes() {
+        return this.savedRecipes;
+    }
+
+    public Set<RecipeEntity> getCookedRecipes() {
+        return this.cookedRecipes;
+    }
+
+    public Set<RecipeEntity> getCommentedRecipes() {
+        return this.commentedRecipes;
     }
 }

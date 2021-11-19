@@ -45,7 +45,7 @@
                     </ul>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" href="/"><i class="far fa-user"></i>&nbsp; Profile</a>
+                    <a class="nav-link" th:href="@{/users/{id}/profile(id=${#authentication.getPrincipal().getId()})}"><i class="far fa-user"></i>&nbsp; Profile</a>
                 </li>
                 <!-- Dropdown -->
                 <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">

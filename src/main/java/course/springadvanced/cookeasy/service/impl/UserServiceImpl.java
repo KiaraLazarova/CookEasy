@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
 
         this.userRepository.saveAndFlush(newUser);
 
-        UserDetails principal = cookEasyUserService.loadUserByUsername(newUser.getUsername());
+        UserDetails principal = this.cookEasyUserService.loadUserByUsername(newUser.getUsername());
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(principal, newUser.getPassword(), principal.getAuthorities());
 

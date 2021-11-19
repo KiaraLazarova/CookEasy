@@ -40,6 +40,7 @@ public class CookEasyUserServiceImpl implements UserDetailsService {
                 user.getUsername(),
                 user.getPassword(),
                 grantedAuthorities,
+                user.getId(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
