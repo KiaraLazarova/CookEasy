@@ -10,7 +10,7 @@ public class HomeController {
     @GetMapping(value = "/")
     public String retrieveHomePage(@AuthenticationPrincipal UserDetails user) {
         if(user == null) return "index";
-
+        //TODO display recipes from database
         return "home";
     }
 }

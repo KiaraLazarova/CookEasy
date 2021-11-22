@@ -21,22 +21,22 @@
             <div class="col-md-12 col-xl-4">
 
               <div class="card" style="border-radius: 15px;">
-                <div class="card-body text-center">
+                <div th:object="${userProfileDetailsViewModel}" class="card-body text-center">
                   <div class="mt-3 mb-4">
                     <img
-                            th:src="@{${'/images/' + #strings.toLowerCase(#authentication.getPrincipal().getGenderEntity().getGenderNameEnum().name()) + '_profile_avatar.png'}}"
+                            th:src="@{'/images/' + *{#strings.toLowerCase(genderEntity.genderNameEnum.name())} + '_profile_avatar.png'}"
                             class="rounded-circle img-fluid" style="width: 100px; border-color: white;"
                     />
                   </div>
                   <h4 class="mb-3">
-                    <th:block th:utext="${#authentication.getPrincipal().getGenderEntity().getGenderNameEnum().name()} == 'MALE' ? 'Mr.' : 'Ms.'"></th:block>
-                    <th:block th:utext="${#authentication.getPrincipal().getFirstName()} != null ? ${#authentication.getPrincipal().getFirstName()} : ''"></th:block>
-                    <th:block th:text="${#authentication.getPrincipal().getLastName()}"></th:block>
+                    <th:block th:utext="*{genderEntity.genderNameEnum.name()} == 'MALE' ? 'Mr.' : 'Ms.'"></th:block>
+                    <th:block th:utext="*{firstName} != null ? *{firstName} : ''"></th:block>
+                    <th:block th:text="*{lastName}"></th:block>
                   </h4>
-                  <p class="text-muted mb-3"><strong>Username</strong> <span class="mx-2">|</span> <th:block th:text="${#authentication.getPrincipal().getUsername()}"></th:block></p>
-                  <p class="text-muted mb-3"><strong>Email</strong> <span class="mx-2">|</span> <th:block th:text="${#authentication.getPrincipal().getEmail()}"></th:block></p>
-                  <p class="text-muted mb-3"><strong>Gender</strong> <span class="mx-2">|</span> <th:block th:text="${#strings.toLowerCase(#authentication.getPrincipal().getGenderEntity().getGenderNameEnum().name())}"></th:block></p>
-                  <p class="text-muted mb-3"><strong>Level</strong> <span class="mx-2">|</span> <th:block th:text="${#strings.toLowerCase(#authentication.getPrincipal().getLevelEntity().getLevelNameEnum().name())}"></th:block></p>
+                  <p class="text-muted mb-3"><strong>Username</strong> <span class="mx-2">|</span> <th:block th:text="*{username}"></th:block></p>
+                  <p class="text-muted mb-3"><strong>Email</strong> <span class="mx-2">|</span> <th:block th:text="*{email}"></th:block></p>
+                  <p class="text-muted mb-3"><strong>Gender</strong> <span class="mx-2">|</span> <th:block th:text="*{#strings.toLowerCase(genderEntity.genderNameEnum.name())}"></th:block></p>
+                  <p class="text-muted mb-3"><strong>Level</strong> <span class="mx-2">|</span> <th:block th:text="*{#strings.toLowerCase(levelEntity.levelNameEnum.name())}"></th:block></p>
                   <div class="d-flex justify-content-center mb-3">
                     <a type="button" class="btn custom-blue-btn" href="/">Edit</a>
                     <a type="button" class="btn custom-pink-btn ms-2" href="/">Delete</a>

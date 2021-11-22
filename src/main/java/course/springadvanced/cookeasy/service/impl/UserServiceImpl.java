@@ -8,6 +8,7 @@ import course.springadvanced.cookeasy.model.entity.enumeration.GenderNameEnum;
 import course.springadvanced.cookeasy.model.entity.enumeration.LevelNameEnum;
 import course.springadvanced.cookeasy.model.entity.enumeration.RoleNameEnum;
 import course.springadvanced.cookeasy.model.service.UserRegisterServiceModel;
+import course.springadvanced.cookeasy.model.view.UserProfileDetailsViewModel;
 import course.springadvanced.cookeasy.repository.UserRepository;
 import course.springadvanced.cookeasy.service.GenderService;
 import course.springadvanced.cookeasy.service.LevelService;
@@ -105,5 +106,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isEmailOccupied(String email) {
         return this.userRepository.findByEmail(email).isPresent();
+    }
+
+    @Override
+    public UserEntity findUserById(Long id) {
+        return this.userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public UserProfileDetailsViewModel getUserProfileDetails(Long id) {
+        UserEntity user = this.findUserById(id);
+
+        return this.mapToUserProfileDetailsViewModel(user);
+    }
+
+    private UserProfileDetailsViewModel mapToUserProfileDetailsViewModel(UserEntity user) {
+        return this.modelMapper.map(user, UserProfileDetailsViewModel.class);
     }
 }
