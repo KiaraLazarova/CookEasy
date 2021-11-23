@@ -7,6 +7,7 @@ import course.springadvanced.cookeasy.model.entity.UserEntity;
 import course.springadvanced.cookeasy.model.entity.enumeration.GenderNameEnum;
 import course.springadvanced.cookeasy.model.entity.enumeration.LevelNameEnum;
 import course.springadvanced.cookeasy.model.entity.enumeration.RoleNameEnum;
+import course.springadvanced.cookeasy.model.service.UserProfileEditServiceModel;
 import course.springadvanced.cookeasy.model.service.UserRegisterServiceModel;
 import course.springadvanced.cookeasy.model.view.UserProfileDetailsViewModel;
 import course.springadvanced.cookeasy.repository.UserRepository;
@@ -83,19 +84,11 @@ public class UserServiceImpl implements UserService {
         RoleEntity userRole = this.roleService.findRoleByRoleName(RoleNameEnum.USER);
         newUser.setRoles(Set.of(userRole));
 
-        GenderEntity gender = this.genderService.findGenderByGenderName(userRegisterServiceModel.getGenderNameEnum());
-        newUser.setGenderEntity(gender);
-
-        LevelEntity level = this.levelService.findLevelByLevelName(userRegisterServiceModel.getLevelNameEnum());
-        newUser.setLevelEntity(level);
-
-        this.userRepository.saveAndFlush(newUser);
-
-        UserDetails principal = this.cookEasyUserService.loadUserByUsername(newUser.getUsername());
-
-        Authentication authentication = new UsernamePasswordAuthenticationToken(principal, newUser.getPassword(), principal.getAuthorities());
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        this.updateUserEntityAndUserDetailsObject(
+                userRegisterServiceModel.getGenderNameEnum(),
+                userRegisterServiceModel.getLevelNameEnum(),
+                newUser
+        );
     }
 
     @Override
@@ -109,18 +102,48 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity findUserById(Long id) {
-        return this.userRepository.findById(id).orElse(null);
-    }
-
-    @Override
     public UserProfileDetailsViewModel getUserProfileDetails(Long id) {
-        UserEntity user = this.findUserById(id);
+        //TODO add error handling - object not found exception
+        UserEntity user = this.userRepository.findById(id).get();
 
         return this.mapToUserProfileDetailsViewModel(user);
     }
 
+    @Override
+    public void editUserProfile(Long id, UserProfileEditServiceModel userProfileEditServiceModel) {
+        //TODO add error handling - object not found exception
+        UserEntity user = this.userRepository.findById(id).get();
+
+        /* Partial update of user entity => no model mapper used here */
+        user.setFirstName(userProfileEditServiceModel.getFirstName());
+        user.setLastName(userProfileEditServiceModel.getLastName());
+
+        this.updateUserEntityAndUserDetailsObject(
+                userProfileEditServiceModel.getGenderNameEnum(),
+                userProfileEditServiceModel.getLevelNameEnum(),
+                user
+        );
+    }
+
     private UserProfileDetailsViewModel mapToUserProfileDetailsViewModel(UserEntity user) {
         return this.modelMapper.map(user, UserProfileDetailsViewModel.class);
+    }
+
+    private void updateUserEntityAndUserDetailsObject(GenderNameEnum genderNameEnum, LevelNameEnum levelNameEnum, UserEntity user) {
+        /* Update user entity */
+        GenderEntity gender = this.genderService.findGenderByGenderName(genderNameEnum);
+        user.setGenderEntity(gender);
+
+        LevelEntity level = this.levelService.findLevelByLevelName(levelNameEnum);
+        user.setLevelEntity(level);
+
+        this.userRepository.saveAndFlush(user);
+
+        /* Update spring user details object */
+        UserDetails principal = this.cookEasyUserService.loadUserByUsername(user.getUsername());
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(principal, user.getPassword(), principal.getAuthorities());
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }

@@ -21,7 +21,7 @@
             <div class="col-md-12 col-xl-4">
 
               <div class="card" style="border-radius: 15px;">
-                <div th:object="${userProfileDetailsViewModel}" class="card-body text-center">
+                <div th:object="${viewModel}" class="card-body text-center">
                   <div class="mt-3 mb-4">
                     <img
                             th:src="@{'/images/' + *{#strings.toLowerCase(genderEntity.genderNameEnum.name())} + '_profile_avatar.png'}"
@@ -38,7 +38,7 @@
                   <p class="text-muted mb-3"><strong>Gender</strong> <span class="mx-2">|</span> <th:block th:text="*{#strings.toLowerCase(genderEntity.genderNameEnum.name())}"></th:block></p>
                   <p class="text-muted mb-3"><strong>Level</strong> <span class="mx-2">|</span> <th:block th:text="*{#strings.toLowerCase(levelEntity.levelNameEnum.name())}"></th:block></p>
                   <div class="d-flex justify-content-center mb-3">
-                    <a type="button" class="btn custom-blue-btn" href="/">Edit</a>
+                    <a type="button" class="btn custom-blue-btn" th:href="@{/users/{id}/profile/edit(id=${#authentication.principal.id})}">Edit</a>
                     <a type="button" class="btn custom-pink-btn ms-2" href="/">Delete</a>
                   </div>
                 </div>

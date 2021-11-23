@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head">
+</head>
+
+<body>
+  <!--Main Navigation-->
+  <header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" th:replace="fragments/navbar :: navbar">
+    </nav>
+    <!-- Navbar -->
+
+    <!-- Background image -->
+    <div id="intro" class="shadow-2-strong">
+      <div class="mask d-flex align-items-center h-100">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-5 col-md-8 mt-5">
+              <!-- MY NOTE: If you want to lessen the height of the form, change p-5 class to p-4 class -->
+              <!-- MY NOTE: If you want to add CUSTOM validation, add novalidate attribute to the form tag + needs-validation to the form class list -->
+              <form th:object="${bindingModel}" th:action="@{/users/{id}/profile/edit(id=${#authentication.principal.id})}" th:method="patch" class="bg-white rounded shadow-5-strong p-4 js-form">
+                <h4 class="mb-4 text-center"><strong>Edit your awesome account</strong></h4>
+                <!-- 2 column grid layout with text inputs for the first and last names -->
+                <div class="row mb-4">
+                  <!-- First name input -->
+                  <div class="col">
+                    <div class="form-outline">
+                      <input th:field="*{firstName}" th:value="*{firstName}" type="text" id="firstName" class="form-control" />
+                      <label class="form-label" for="firstName">First name</label>
+                    </div>
+                  </div>
+                  <!-- Last name input -->
+                  <div class="col">
+                    <div class="form-outline">
+                      <input th:field="*{lastName}" th:value="*{lastName}" type="text" id="lastName" class="form-control" required minlength="5" maxlength="12" aria-describedby="lastNameHelpInline" />
+                      <label class="form-label" for="lastName">Last name</label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 2 column grid layout with select inputs for the gender and level name enums -->
+                <div class="row mb-4">
+                  <!-- Gender select input -->
+                  <div class="col">
+                    <div class="form-outline">
+                      <select th:field="*{genderNameEnum}" id="gender" class="browser-default custom-select form-select" required aria-describedby="genderHelpInline">
+                        <option value="" selected>Choose gender</option>
+                        <option th:each="gender : ${T(course.springadvanced.cookeasy.model.entity.enumeration.GenderNameEnum).values()}"
+                              th:value="${gender}" th:text="${#strings.toLowerCase(gender)}"></option>
+                      </select>
+                    </div>
+                  </div>
+                  <!-- Level select input -->
+                  <div class="col">
+                    <div class="form-outline">
+                      <select th:field="*{levelNameEnum}" id="level" class="browser-default custom-select form-select" required aria-describedby="levelHelpInline">
+                        <option value="" selected>Choose level</option>
+                        <option th:each="level : ${T(course.springadvanced.cookeasy.model.entity.enumeration.LevelNameEnum).values()}"
+                              th:value="${level}" th:text="${#strings.toLowerCase(level)}"></option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-block mb-3 custom-pink-btn">Save changes</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Background image -->
+  </header>
+  <!--Main Navigation-->
+
+  <!--Footer-->
+  <footer class="bg-light text-lg-start" th:replace="fragments/footer :: footer">
+  </footer>
+  <!--Footer-->
+
+    <!-- MDB script -->
+    <script type="text/javascript" src="/js/mdb.min.js"></script>
+    <!-- Custom script -->
+    <script type="text/javascript" src="/js/script.js"></script>
+</body>
+
+</html>
