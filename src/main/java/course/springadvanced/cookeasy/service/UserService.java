@@ -11,4 +11,5 @@ public interface UserService {
     boolean isEmailOccupied(String email);
     UserProfileDetailsViewModel getUserProfileDetails(Long id);
     void editUserProfile(Long id, UserProfileEditServiceModel userProfileEditServiceModel);
+    void deleteUserProfile(Long id);
 }

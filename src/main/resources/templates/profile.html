@@ -39,7 +39,9 @@
                   <p class="text-muted mb-3"><strong>Level</strong> <span class="mx-2">|</span> <th:block th:text="*{#strings.toLowerCase(levelEntity.levelNameEnum.name())}"></th:block></p>
                   <div class="d-flex justify-content-center mb-3">
                     <a type="button" class="btn custom-blue-btn" th:href="@{/users/{id}/profile/edit(id=${#authentication.principal.id})}">Edit</a>
-                    <a type="button" class="btn custom-pink-btn ms-2" href="/">Delete</a>
+                    <form th:action="@{/users/{id}/profile/delete(id=${#authentication.principal.id})}" th:method="delete">
+                      <input type="submit" class="btn custom-pink-btn ms-2" value="Delete"/>
+                    </form>
                   </div>
                 </div>
               </div>

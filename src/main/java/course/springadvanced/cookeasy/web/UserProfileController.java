@@ -59,4 +59,11 @@ public class UserProfileController {
 
         return "redirect:/users/" + id + "/profile";
     }
+
+    @DeleteMapping(value = "/users/{id}/profile/delete")
+    public String deleteUserProfile(@PathVariable(name = "id") Long id) {
+        this.userService.deleteUserProfile(id);
+
+        return "redirect:/";
+    }
 }

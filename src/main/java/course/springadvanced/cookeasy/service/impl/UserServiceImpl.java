@@ -125,6 +125,13 @@ public class UserServiceImpl implements UserService {
         );
     }
 
+    @Override
+    public void deleteUserProfile(Long id) {
+        this.userRepository.deleteById(id);
+
+        SecurityContextHolder.getContext().setAuthentication(null);
+    }
+
     private UserProfileDetailsViewModel mapToUserProfileDetailsViewModel(UserEntity user) {
         return this.modelMapper.map(user, UserProfileDetailsViewModel.class);
     }
