@@ -21,7 +21,7 @@
             <div class="col-xl-5 col-md-8 mt-5">
               <!-- MY NOTE: If you want to lessen the height of the form, change p-5 class to p-4 class -->
               <!-- MY NOTE: If you want to add CUSTOM validation, add novalidate attribute to the form tag + needs-validation to the form class list -->
-              <form th:object="${bindingModel}" th:action="@{/users/{id}/profile/edit(id=${#authentication.principal.id})}" th:method="patch" class="bg-white rounded shadow-5-strong p-4 js-form">
+              <form th:object="${bindingModel}" th:action="@{/users/{id}/profile/edit(id=${#authentication.principal.id})}" th:method="patch" class="bg-white rounded shadow-5-strong p-4">
                 <h4 class="mb-4 text-center"><strong>Edit your awesome account</strong></h4>
                 <!-- 2 column grid layout with text inputs for the first and last names -->
                 <div class="row mb-4">

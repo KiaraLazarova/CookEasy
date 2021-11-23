@@ -48,7 +48,6 @@ public class UserRegisterController {
     public String registerAndLoginUser(@Valid UserRegisterBindingModel userRegisterBindingModel,
                                        BindingResult bindingResult,
                                        RedirectAttributes redirectAttributes) {
-
         if(bindingResult.hasErrors() || !userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword())) {
             if(this.userService.isUsernameOccupied(userRegisterBindingModel.getUsername()))
                 redirectAttributes.addFlashAttribute("usernameOccupied", true);

@@ -20,8 +20,8 @@
           <div class="row justify-content-center">
             <div class="col-xl-5 col-md-8 mt-5">
               <!-- MY NOTE: If you want to lessen the height of the form, change p-5 class to p-4 class -->
-              <!-- MY NOTE: If you want to add CUSTOM validation, add novalidate attribute to the form tag -->
-              <form th:object="${bindingModel}" th:action="@{/users/register}" th:method="POST" id="registerForm" class="bg-white rounded shadow-5-strong p-4 needs-validation">
+              <!-- MY NOTE: If you want to add CUSTOM validation, add novalidate attribute to the form tag + needs-validation to the form class list -->
+              <form th:object="${bindingModel}" th:action="@{/users/register}" th:method="post" id="registerForm" class="bg-white rounded shadow-5-strong p-4">
                 <h4 class="mb-4 text-center"><strong>Create your awesome account</strong></h4>
                 <!-- 2 column grid layout with text inputs for the first and last names -->
                 <div class="row mb-4">

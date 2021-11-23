@@ -7,7 +7,6 @@ public class UserProfileDetailsViewModel {
     private String username;
     private String firstName;
     private String lastName;
-    private String password;
     private String email;
     private GenderEntity genderEntity;
     private LevelEntity levelEntity;
@@ -37,14 +36,6 @@ public class UserProfileDetailsViewModel {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {
