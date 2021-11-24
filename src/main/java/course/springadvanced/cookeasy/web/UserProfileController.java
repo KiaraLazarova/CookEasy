@@ -55,6 +55,7 @@ public class UserProfileController {
         }
 
         UserProfileEditServiceModel userProfileEditServiceModel = this.modelMapper.map(userProfileEditBindingModel, UserProfileEditServiceModel.class);
+
         this.userService.editUserProfile(id, userProfileEditServiceModel);
 
         return "redirect:/users/" + id + "/profile";

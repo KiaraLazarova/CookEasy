@@ -6,11 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HomeController {
+public class IndexController {
     @GetMapping(value = "/")
-    public String retrieveHomePage(@AuthenticationPrincipal UserDetails user) {
-        if(user == null) return "index";
-        //TODO display recipes from database
-        return "home";
+    public String retrieveIndexPage(@AuthenticationPrincipal UserDetails user) {
+        if(user != null) return "redirect:/recipes";
+
+        return "index";
     }
 }

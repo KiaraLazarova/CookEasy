@@ -29,7 +29,7 @@ public class RecipeEntity extends BaseEntity {
         this.createdOn = createdOn;
     }
 
-    @Column(name = "title", nullable = false, unique = true)
+    @Column(name = "title", length = 50, nullable = false, unique = true)
     public String getTitle() {
         return this.title;
     }

@@ -1,6 +1,6 @@
 package course.springadvanced.cookeasy.util.annotation;
 
-import course.springadvanced.cookeasy.util.UniqueUsernameValidator;
+import course.springadvanced.cookeasy.util.UniqueRecipeTitleValidator;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.ElementType;
@@ -10,9 +10,9 @@ import java.lang.annotation.Target;
 
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = ElementType.FIELD)
-@Constraint(validatedBy = UniqueUsernameValidator.class)
-public @interface UniqueUsername {
-    String message() default "Username must be unique.";
+@Constraint(validatedBy = UniqueRecipeTitleValidator.class)
+public @interface UniqueRecipeTitle {
+    String message() default "Recipe title must be unique.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

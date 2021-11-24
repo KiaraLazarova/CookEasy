@@ -103,16 +103,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserProfileDetailsViewModel getUserProfileDetails(Long id) {
-        //TODO add error handling - object not found exception
-        UserEntity user = this.userRepository.findById(id).get();
+        UserEntity user = this.findUserById(id);
 
         return this.mapToUserProfileDetailsViewModel(user);
     }
 
     @Override
     public void editUserProfile(Long id, UserProfileEditServiceModel userProfileEditServiceModel) {
-        //TODO add error handling - object not found exception
-        UserEntity user = this.userRepository.findById(id).get();
+        UserEntity user = this.findUserById(id);
 
         /* Partial update of user entity => no model mapper used here */
         user.setFirstName(userProfileEditServiceModel.getFirstName());
@@ -130,6 +128,17 @@ public class UserServiceImpl implements UserService {
         this.userRepository.deleteById(id);
 
         SecurityContextHolder.getContext().setAuthentication(null);
+    }
+
+    @Override
+    public UserEntity findUserByUsername(String username) {
+        //TODO add error handling - object not found exception
+        return this.userRepository.findByUsername(username).get();
+    }
+
+    private UserEntity findUserById(Long id) {
+        //TODO add error handling - object not found exception
+        return this.userRepository.findById(id).get();
     }
 
     private UserProfileDetailsViewModel mapToUserProfileDetailsViewModel(UserEntity user) {

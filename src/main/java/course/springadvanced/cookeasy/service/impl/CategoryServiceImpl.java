@@ -70,4 +70,9 @@ public class CategoryServiceImpl implements CategoryService {
 
         this.categoryRepository.saveAndFlush(other);
     }
+
+    @Override
+    public CategoryEntity findCategoryByCategoryName(CategoryNameEnum categoryNameEnum) {
+        return this.categoryRepository.findByCategoryNameEnum(categoryNameEnum);
+    }
 }
