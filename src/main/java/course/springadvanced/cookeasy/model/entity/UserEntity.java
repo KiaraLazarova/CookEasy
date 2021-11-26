@@ -1,9 +1,7 @@
 package course.springadvanced.cookeasy.model.entity;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -15,12 +13,12 @@ public class UserEntity extends BaseEntity {
     private String email;
     private GenderEntity genderEntity;
     private LevelEntity levelEntity;
-    private Set<RoleEntity> roles = new HashSet<>();
-    private Set<RecipeEntity> addedRecipes = new HashSet<>();
-    private Set<RecipeEntity> likedRecipes = new HashSet<>();
-    private Set<RecipeEntity> savedRecipes = new HashSet<>();
-    private Set<RecipeEntity> cookedRecipes = new HashSet<>();
-    private Set<RecipeEntity> commentedRecipes = new HashSet<>();
+    private List<RoleEntity> roles = new ArrayList<>();
+    private List<RecipeEntity> addedRecipes = new ArrayList<>();
+    private List<RecipeEntity> likedRecipes = new ArrayList<>();
+    private List<RecipeEntity> savedRecipes = new ArrayList<>();
+    private List<RecipeEntity> cookedRecipes = new ArrayList<>();
+    private List<RecipeEntity> commentedRecipes = new ArrayList<>();
 
     public UserEntity() {
     }
@@ -90,60 +88,60 @@ public class UserEntity extends BaseEntity {
         this.levelEntity = levelEntity;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    public Set<RoleEntity> getRoles() {
+    public List<RoleEntity> getRoles() {
         return this.roles;
     }
 
-    public void setRoles(Set<RoleEntity> roles) {
+    public void setRoles(List<RoleEntity> roles) {
         this.roles = roles;
     }
 
-    @OneToMany(mappedBy = "author", targetEntity = RecipeEntity.class, fetch = FetchType.EAGER)
-    public Set<RecipeEntity> getAddedRecipes() {
+    @OneToMany(mappedBy = "author", targetEntity = RecipeEntity.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<RecipeEntity> getAddedRecipes() {
         return this.addedRecipes;
     }
 
-    public void setAddedRecipes(Set<RecipeEntity> addedRecipes) {
+    public void setAddedRecipes(List<RecipeEntity> addedRecipes) {
         this.addedRecipes = addedRecipes;
     }
 
-    @OneToMany(mappedBy = "author", targetEntity = RecipeEntity.class, fetch = FetchType.EAGER)
-    public Set<RecipeEntity> getLikedRecipes() {
+    @OneToMany(mappedBy = "author", targetEntity = RecipeEntity.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<RecipeEntity> getLikedRecipes() {
         return likedRecipes;
     }
 
-    public void setLikedRecipes(Set<RecipeEntity> likedRecipes) {
+    public void setLikedRecipes(List<RecipeEntity> likedRecipes) {
         this.likedRecipes = likedRecipes;
     }
 
-    @OneToMany(mappedBy = "author", targetEntity = RecipeEntity.class, fetch = FetchType.EAGER)
-    public Set<RecipeEntity> getSavedRecipes() {
+    @OneToMany(mappedBy = "author", targetEntity = RecipeEntity.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<RecipeEntity> getSavedRecipes() {
         return this.savedRecipes;
     }
 
-    public void setSavedRecipes(Set<RecipeEntity> savedRecipes) {
+    public void setSavedRecipes(List<RecipeEntity> savedRecipes) {
         this.savedRecipes = savedRecipes;
     }
 
-    @OneToMany(mappedBy = "author", targetEntity = RecipeEntity.class, fetch = FetchType.EAGER)
-    public Set<RecipeEntity> getCookedRecipes() {
+    @OneToMany(mappedBy = "author", targetEntity = RecipeEntity.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<RecipeEntity> getCookedRecipes() {
         return this.cookedRecipes;
     }
 
-    public void setCookedRecipes(Set<RecipeEntity> cookedRecipes) {
+    public void setCookedRecipes(List<RecipeEntity> cookedRecipes) {
         this.cookedRecipes = cookedRecipes;
     }
 
-    @OneToMany(mappedBy = "author", targetEntity = RecipeEntity.class, fetch = FetchType.EAGER)
-    public Set<RecipeEntity> getCommentedRecipes() {
+    @OneToMany(mappedBy = "author", targetEntity = RecipeEntity.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<RecipeEntity> getCommentedRecipes() {
         return this.commentedRecipes;
     }
 
-    public void setCommentedRecipes(Set<RecipeEntity> commentedRecipes) {
+    public void setCommentedRecipes(List<RecipeEntity> commentedRecipes) {
         this.commentedRecipes = commentedRecipes;
     }
 }

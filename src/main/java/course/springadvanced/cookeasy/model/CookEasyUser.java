@@ -6,7 +6,7 @@ import course.springadvanced.cookeasy.model.entity.RecipeEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 public class CookEasyUser extends User {
     private final Long id;
@@ -15,13 +15,16 @@ public class CookEasyUser extends User {
     private final String email;
     private final GenderEntity genderEntity;
     private final LevelEntity levelEntity;
-    private final Set<RecipeEntity> addedRecipes;
-    private final Set<RecipeEntity> likedRecipes;
-    private final Set<RecipeEntity> savedRecipes;
-    private final Set<RecipeEntity> cookedRecipes;
-    private final Set<RecipeEntity> commentedRecipes;
+    private final List<RecipeEntity> addedRecipes;
+    private final List<RecipeEntity> likedRecipes;
+    private final List<RecipeEntity> savedRecipes;
+    private final List<RecipeEntity> cookedRecipes;
+    private final List<RecipeEntity> commentedRecipes;
 
-    public CookEasyUser(String username, String password, Collection<? extends GrantedAuthority> authorities, Long id, String firstName, String lastName, String email, GenderEntity genderEntity, LevelEntity levelEntity, Set<RecipeEntity> addedRecipes, Set<RecipeEntity> likedRecipes, Set<RecipeEntity> savedRecipes, Set<RecipeEntity> cookedRecipes, Set<RecipeEntity> commentedRecipes) {
+    public CookEasyUser(String username, String password, Collection<? extends GrantedAuthority> authorities,
+                        Long id, String firstName, String lastName, String email, GenderEntity genderEntity,
+                        LevelEntity levelEntity, List<RecipeEntity> addedRecipes, List<RecipeEntity> likedRecipes,
+                        List<RecipeEntity> savedRecipes, List<RecipeEntity> cookedRecipes, List<RecipeEntity> commentedRecipes) {
         super(username, password, authorities);
         this.id = id;
         this.firstName = firstName;
@@ -36,7 +39,12 @@ public class CookEasyUser extends User {
         this.commentedRecipes = commentedRecipes;
     }
 
-    public CookEasyUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, Long id, String firstName, String lastName, String email, GenderEntity genderEntity, LevelEntity levelEntity, Set<RecipeEntity> addedRecipes, Set<RecipeEntity> likedRecipes, Set<RecipeEntity> savedRecipes, Set<RecipeEntity> cookedRecipes, Set<RecipeEntity> commentedRecipes) {
+    public CookEasyUser(String username, String password, boolean enabled, boolean accountNonExpired,
+                        boolean credentialsNonExpired, boolean accountNonLocked,
+                        Collection<? extends GrantedAuthority> authorities, Long id, String firstName,
+                        String lastName, String email, GenderEntity genderEntity, LevelEntity levelEntity,
+                        List<RecipeEntity> addedRecipes, List<RecipeEntity> likedRecipes, List<RecipeEntity> savedRecipes,
+                        List<RecipeEntity> cookedRecipes, List<RecipeEntity> commentedRecipes) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.id = id;
         this.firstName = firstName;
@@ -75,23 +83,23 @@ public class CookEasyUser extends User {
         return this.levelEntity;
     }
 
-    public Set<RecipeEntity> getAddedRecipes() {
+    public List<RecipeEntity> getAddedRecipes() {
         return this.addedRecipes;
     }
 
-    public Set<RecipeEntity> getLikedRecipes() {
+    public List<RecipeEntity> getLikedRecipes() {
         return this.likedRecipes;
     }
 
-    public Set<RecipeEntity> getSavedRecipes() {
+    public List<RecipeEntity> getSavedRecipes() {
         return this.savedRecipes;
     }
 
-    public Set<RecipeEntity> getCookedRecipes() {
+    public List<RecipeEntity> getCookedRecipes() {
         return this.cookedRecipes;
     }
 
-    public Set<RecipeEntity> getCommentedRecipes() {
+    public List<RecipeEntity> getCommentedRecipes() {
         return this.commentedRecipes;
     }
 }

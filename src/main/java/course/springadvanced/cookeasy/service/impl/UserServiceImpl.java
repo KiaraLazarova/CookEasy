@@ -23,7 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.userdetails.UserDetails;
-import java.util.Set;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
 
         RoleEntity userRole = this.roleService.findRoleByRoleName(RoleNameEnum.USER);
         RoleEntity adminRole = this.roleService.findRoleByRoleName(RoleNameEnum.ADMIN);
-        admin.setRoles(Set.of(userRole, adminRole));
+        admin.setRoles(List.of(userRole, adminRole));
 
         this.userRepository.saveAndFlush(admin);
     }
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
         newUser.setPassword(this.passwordEncoder.encode(userRegisterServiceModel.getPassword()));
 
         RoleEntity userRole = this.roleService.findRoleByRoleName(RoleNameEnum.USER);
-        newUser.setRoles(Set.of(userRole));
+        newUser.setRoles(List.of(userRole));
 
         this.updateUserEntityAndUserDetailsObject(
                 userRegisterServiceModel.getGenderNameEnum(),

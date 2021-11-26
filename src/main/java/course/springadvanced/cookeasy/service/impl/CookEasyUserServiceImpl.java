@@ -10,9 +10,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import javax.transaction.Transactional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Transactional
 @Service
 public class CookEasyUserServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
