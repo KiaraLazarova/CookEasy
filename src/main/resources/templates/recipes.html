@@ -20,9 +20,9 @@
             <div class="text-white text-center">
               <br>
               <br>
-              <h1 class="mb-3">Recipes</h1>
+              <h1 class="mb-3">Recipes, specially selected for you</h1>
               <h5 class="mb-4">You want to add a recipe? No problem - just click the button below.</h5>
-              <a class="btn btn-outline-light btn-lg m-2" href="/" role="button">Create new recipe</a>
+              <a class="btn btn-outline-light btn-lg m-2" th:href="@{/recipes/add}" role="button">Create new recipe</a>
             </div>
           </div>
         </div>
@@ -37,7 +37,7 @@
         <!--Section: Content-->
         <section class="text-center">
           <!-- Recipe -->
-          <div class="row custom-row-outline">
+          <div th:each="viewModel : ${viewModels}" th:object="${viewModel}" class="row custom-row-outline">
             <div class="col-md-4 mb-4">
               <div class="bg-image hover-overlay shadow-1-strong rounded ripple" data-mdb-ripple-color="light">
                 <img src="https://mdbootstrap.com/img/new/standard/nature/002.jpg" class="img-fluid" />
@@ -48,31 +48,30 @@
             </div>
 
             <div class="col-md-8 mb-4">
-              <h4><strong>Recipe title</strong></h4>
-              <h6 class="text-muted text-decoration-underline"><strong>Difficulty level:</strong> BEGINNER</h6>
+              <h4><strong th:text="*{title}"></strong></h4>
+              <h6 class="text-muted text-decoration-underline"><strong>Category:</strong> <th:block th:text="*{categoryEntity.categoryNameEnum.name()}"></th:block></h6>
+              <h6 class="text-muted text-decoration-underline"><strong>Difficulty level:</strong> <th:block th:text="*{levelEntity.levelNameEnum.name()}"></th:block></h6>
               <div class="d-inline-flex justify-content-start rounded-3 p-2 mb-2" style="background-color: #efefef;">
                   <div class="px-3">
                       <p class="small text-muted mb-1">Likes</p>
-                      <p class="mb-0">41</p>
+                      <p class="mb-0"><th:block th:text="*{likes}"></th:block></p>
                   </div>
                   <div class="px-3">
                       <p class="small text-muted mb-1">Saves</p>
-                      <p class="mb-0">976</p>
+                      <p class="mb-0"><th:block th:text="*{saves}"></th:block></p>
                   </div>
                   <div class="px-3">
                       <p class="small text-muted mb-1">Cooks</p>
-                      <p class="mb-0">852</p>
+                      <p class="mb-0"><th:block th:text="*{cooks}"></th:block></p>
                   </div>
                   <div class="px-3">
                       <p class="small text-muted mb-1">Comments</p>
-                      <p class="mb-0">10</p>
+                      <p class="mb-0"><th:block th:text="*{comments}"></th:block></p>
                   </div>
               </div>
               <br>
               <p class="custom-text-justify">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus ratione
-                necessitatibus itaque error alias repellendus nemo reiciendis aperiam quisquam minus
-                ipsam reprehenderit commodi ducimus, in dicta aliquam eveniet dignissimos magni.
+                  <th:block th:text="*{#strings.substring(description, 0, 237).trim()}"></th:block>...
               </p>
               <a type="button" class="btn custom-pink-btn" href="/">Read more</a>
             </div>

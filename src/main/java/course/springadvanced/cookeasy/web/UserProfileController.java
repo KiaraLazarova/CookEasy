@@ -27,6 +27,7 @@ public class UserProfileController {
     @GetMapping(value = "/users/{id}/profile")
     public String retrieveProfilePage(@PathVariable(name = "id") Long id, Model model) {
         UserProfileDetailsViewModel userProfileDetailsViewModel = this.userService.getUserProfileDetails(id);
+
         model.addAttribute("viewModel", userProfileDetailsViewModel);
 
         return "profile";

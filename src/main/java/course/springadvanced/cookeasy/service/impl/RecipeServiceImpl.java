@@ -5,15 +5,15 @@ import course.springadvanced.cookeasy.model.entity.LevelEntity;
 import course.springadvanced.cookeasy.model.entity.RecipeEntity;
 import course.springadvanced.cookeasy.model.entity.UserEntity;
 import course.springadvanced.cookeasy.model.service.RecipeAddServiceModel;
+import course.springadvanced.cookeasy.model.view.RecipeBriefDescriptionViewModel;
 import course.springadvanced.cookeasy.repository.RecipeRepository;
-import course.springadvanced.cookeasy.service.CategoryService;
-import course.springadvanced.cookeasy.service.LevelService;
-import course.springadvanced.cookeasy.service.RecipeService;
-import course.springadvanced.cookeasy.service.UserService;
+import course.springadvanced.cookeasy.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -21,14 +21,16 @@ public class RecipeServiceImpl implements RecipeService {
     private final CategoryService categoryService;
     private final LevelService levelService;
     private final UserService userService;
+    private final CommentService commentService;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public RecipeServiceImpl(RecipeRepository recipeRepository, CategoryService categoryService, LevelService levelService, UserService userService, ModelMapper modelMapper) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository, CategoryService categoryService, LevelService levelService, UserService userService, CommentService commentService, ModelMapper modelMapper) {
         this.recipeRepository = recipeRepository;
         this.categoryService = categoryService;
         this.levelService = levelService;
         this.userService = userService;
+        this.commentService = commentService;
         this.modelMapper = modelMapper;
     }
 
@@ -64,5 +66,24 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public boolean isTitleOccupied(String title) {
         return this.recipeRepository.findByTitle(title).isPresent();
+    }
+
+    @Override
+    public List<RecipeBriefDescriptionViewModel> getRecipesBriefDescriptions(String username) {
+        UserEntity author = this.userService.findUserByUsername(username);
+        Long levelId = author.getLevelEntity().getId();
+
+        return this.recipeRepository.findAllByLevelEntityByOrderByCategoryNameEnumAsc(levelId)
+                .stream()
+                .map(this::mapToRecipeBriefDescriptionViewModel)
+                .collect(Collectors.toList());
+    }
+
+    private RecipeBriefDescriptionViewModel mapToRecipeBriefDescriptionViewModel(RecipeEntity recipe) {
+        RecipeBriefDescriptionViewModel recipeBriefDescriptionViewModel =
+                this.modelMapper.map(recipe, RecipeBriefDescriptionViewModel.class);
+        recipeBriefDescriptionViewModel.setComments(this.commentService.getCountOfRecipeComments(recipe.getId()));
+
+        return recipeBriefDescriptionViewModel;
     }
 }
