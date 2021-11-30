@@ -1,9 +1,6 @@
 package course.springadvanced.cookeasy.service.impl;
 
-import course.springadvanced.cookeasy.model.entity.GenderEntity;
-import course.springadvanced.cookeasy.model.entity.LevelEntity;
-import course.springadvanced.cookeasy.model.entity.RoleEntity;
-import course.springadvanced.cookeasy.model.entity.UserEntity;
+import course.springadvanced.cookeasy.model.entity.*;
 import course.springadvanced.cookeasy.model.entity.enumeration.GenderNameEnum;
 import course.springadvanced.cookeasy.model.entity.enumeration.LevelNameEnum;
 import course.springadvanced.cookeasy.model.entity.enumeration.RoleNameEnum;
@@ -11,10 +8,7 @@ import course.springadvanced.cookeasy.model.service.UserProfileEditServiceModel;
 import course.springadvanced.cookeasy.model.service.UserRegisterServiceModel;
 import course.springadvanced.cookeasy.model.view.UserProfileDetailsViewModel;
 import course.springadvanced.cookeasy.repository.UserRepository;
-import course.springadvanced.cookeasy.service.GenderService;
-import course.springadvanced.cookeasy.service.LevelService;
-import course.springadvanced.cookeasy.service.RoleService;
-import course.springadvanced.cookeasy.service.UserService;
+import course.springadvanced.cookeasy.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -125,7 +119,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserProfile(Long id) {
-        this.userRepository.deleteById(id);
+        UserEntity user = this.findUserById(id);
+
+        user.getLikedRecipes().forEach(r -> r.setLikes(r.getLikes() - 1));
+        user.getSavedRecipes().forEach(r -> r.setSaves(r.getSaves() - 1));
+        user.getCookedRecipes().forEach(r -> r.setCooks(r.getCooks() - 1));
+
+        this.userRepository.delete(user);
 
         SecurityContextHolder.getContext().setAuthentication(null);
     }
@@ -134,6 +134,11 @@ public class UserServiceImpl implements UserService {
     public UserEntity findUserByUsername(String username) {
         //TODO add error handling - object not found exception
         return this.userRepository.findByUsername(username).get();
+    }
+
+    @Override
+    public void saveAndFlushUser(UserEntity user) {
+        this.userRepository.saveAndFlush(user);
     }
 
     private UserEntity findUserById(Long id) {

@@ -18,7 +18,6 @@ public class UserEntity extends BaseEntity {
     private List<RecipeEntity> likedRecipes = new ArrayList<>();
     private List<RecipeEntity> savedRecipes = new ArrayList<>();
     private List<RecipeEntity> cookedRecipes = new ArrayList<>();
-    private List<RecipeEntity> commentedRecipes = new ArrayList<>();
 
     public UserEntity() {
     }
@@ -109,16 +108,22 @@ public class UserEntity extends BaseEntity {
         this.addedRecipes = addedRecipes;
     }
 
-    @OneToMany(mappedBy = "author", targetEntity = RecipeEntity.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "users_liked_recipes",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "Liked_recipe_id", referencedColumnName = "id"))
     public List<RecipeEntity> getLikedRecipes() {
-        return likedRecipes;
+        return this.likedRecipes;
     }
 
     public void setLikedRecipes(List<RecipeEntity> likedRecipes) {
         this.likedRecipes = likedRecipes;
     }
 
-    @OneToMany(mappedBy = "author", targetEntity = RecipeEntity.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "users_saved_recipes",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "saved_recipe_id", referencedColumnName = "id"))
     public List<RecipeEntity> getSavedRecipes() {
         return this.savedRecipes;
     }
@@ -127,21 +132,15 @@ public class UserEntity extends BaseEntity {
         this.savedRecipes = savedRecipes;
     }
 
-    @OneToMany(mappedBy = "author", targetEntity = RecipeEntity.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "users_cooked_recipes",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "cooked_recipe_id", referencedColumnName = "id"))
     public List<RecipeEntity> getCookedRecipes() {
         return this.cookedRecipes;
     }
 
     public void setCookedRecipes(List<RecipeEntity> cookedRecipes) {
         this.cookedRecipes = cookedRecipes;
-    }
-
-    @OneToMany(mappedBy = "author", targetEntity = RecipeEntity.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    public List<RecipeEntity> getCommentedRecipes() {
-        return this.commentedRecipes;
-    }
-
-    public void setCommentedRecipes(List<RecipeEntity> commentedRecipes) {
-        this.commentedRecipes = commentedRecipes;
     }
 }

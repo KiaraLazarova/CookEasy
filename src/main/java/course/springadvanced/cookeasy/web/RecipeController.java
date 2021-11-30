@@ -3,6 +3,7 @@ package course.springadvanced.cookeasy.web;
 import course.springadvanced.cookeasy.model.binding.RecipeAddBindingModel;
 import course.springadvanced.cookeasy.model.service.RecipeAddServiceModel;
 import course.springadvanced.cookeasy.model.view.RecipeBriefDescriptionViewModel;
+import course.springadvanced.cookeasy.model.view.RecipeDetailsViewModel;
 import course.springadvanced.cookeasy.service.RecipeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,14 +75,45 @@ public class RecipeController {
     }
 
     @GetMapping(value = "/recipes/{id}/details")
-    public String retrieveRecipeDetailsPage(@PathVariable(name = "id") Long id) {
-        //TODO create recipe details template + edit, delete buttons (owner, admin) - delete button as form
-        //TODO create recipe details view model - validate
-        //TODO create get recipe details method in recipe service
-        //TODO implement get recipe details method - return type recipe details view model
-        //TODO invoke get recipe details method in controller
-        //TODO add template form method attributes - th:action, th:method (get), th:field
-        return null;
+    public String retrieveRecipeDetailsPage(@PathVariable(name = "id") Long id, Model model, Principal principal) {
+        RecipeDetailsViewModel recipeDetailsViewModel = this.recipeService.getRecipeDetails(id);
+
+        model.addAttribute("viewModel", recipeDetailsViewModel);
+
+        boolean isRecipeLiked = this.recipeService.isRecipeLiked(principal.getName(), id);
+
+        model.addAttribute("isRecipeLiked", isRecipeLiked);
+
+        boolean isRecipeSaved = this.recipeService.isRecipeSaved(principal.getName(), id);
+
+        model.addAttribute("isRecipeSaved", isRecipeSaved);
+
+        boolean isRecipeCooked = this.recipeService.isRecipeCooked(principal.getName(), id);
+
+        model.addAttribute("isRecipeCooked", isRecipeCooked);
+
+        return "recipe-details";
+    }
+
+    @PatchMapping(value = "/recipes/{id}/details/like")
+    public String likeRecipe(@PathVariable Long id, Principal principal) {
+        this.recipeService.likeRecipe(principal.getName(), id);
+
+        return "redirect:/recipes/" + id + "/details";
+    }
+
+    @PatchMapping(value = "/recipes/{id}/details/save")
+    public String saveRecipe(@PathVariable Long id, Principal principal) {
+        this.recipeService.saveRecipe(principal.getName(), id);
+
+        return "redirect:/recipes/" + id + "/details";
+    }
+
+    @PatchMapping(value = "/recipes/{id}/details/cook")
+    public String cookRecipe(@PathVariable Long id, Principal principal) {
+        this.recipeService.cookRecipe(principal.getName(), id);
+
+        return "redirect:/recipes/" + id + "/details";
     }
 
     @PatchMapping(value = "/recipes/{id}/details/edit")

@@ -47,12 +47,7 @@ public class CookEasyUserServiceImpl implements UserDetailsService {
                 user.getLastName(),
                 user.getEmail(),
                 user.getGenderEntity(),
-                user.getLevelEntity(),
-                user.getAddedRecipes(),
-                user.getLikedRecipes(),
-                user.getSavedRecipes(),
-                user.getCookedRecipes(),
-                user.getCommentedRecipes()
+                user.getLevelEntity()
         );
     }
 }

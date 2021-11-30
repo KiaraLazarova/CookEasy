@@ -15,16 +15,10 @@ public class CookEasyUser extends User {
     private final String email;
     private final GenderEntity genderEntity;
     private final LevelEntity levelEntity;
-    private final List<RecipeEntity> addedRecipes;
-    private final List<RecipeEntity> likedRecipes;
-    private final List<RecipeEntity> savedRecipes;
-    private final List<RecipeEntity> cookedRecipes;
-    private final List<RecipeEntity> commentedRecipes;
 
     public CookEasyUser(String username, String password, Collection<? extends GrantedAuthority> authorities,
                         Long id, String firstName, String lastName, String email, GenderEntity genderEntity,
-                        LevelEntity levelEntity, List<RecipeEntity> addedRecipes, List<RecipeEntity> likedRecipes,
-                        List<RecipeEntity> savedRecipes, List<RecipeEntity> cookedRecipes, List<RecipeEntity> commentedRecipes) {
+                        LevelEntity levelEntity) {
         super(username, password, authorities);
         this.id = id;
         this.firstName = firstName;
@@ -32,19 +26,12 @@ public class CookEasyUser extends User {
         this.email = email;
         this.genderEntity = genderEntity;
         this.levelEntity = levelEntity;
-        this.addedRecipes = addedRecipes;
-        this.likedRecipes = likedRecipes;
-        this.savedRecipes = savedRecipes;
-        this.cookedRecipes = cookedRecipes;
-        this.commentedRecipes = commentedRecipes;
     }
 
     public CookEasyUser(String username, String password, boolean enabled, boolean accountNonExpired,
                         boolean credentialsNonExpired, boolean accountNonLocked,
                         Collection<? extends GrantedAuthority> authorities, Long id, String firstName,
-                        String lastName, String email, GenderEntity genderEntity, LevelEntity levelEntity,
-                        List<RecipeEntity> addedRecipes, List<RecipeEntity> likedRecipes, List<RecipeEntity> savedRecipes,
-                        List<RecipeEntity> cookedRecipes, List<RecipeEntity> commentedRecipes) {
+                        String lastName, String email, GenderEntity genderEntity, LevelEntity levelEntity) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.id = id;
         this.firstName = firstName;
@@ -52,11 +39,6 @@ public class CookEasyUser extends User {
         this.email = email;
         this.genderEntity = genderEntity;
         this.levelEntity = levelEntity;
-        this.addedRecipes = addedRecipes;
-        this.likedRecipes = likedRecipes;
-        this.savedRecipes = savedRecipes;
-        this.cookedRecipes = cookedRecipes;
-        this.commentedRecipes = commentedRecipes;
     }
 
     public Long getId() {
@@ -81,25 +63,5 @@ public class CookEasyUser extends User {
 
     public LevelEntity getLevelEntity() {
         return this.levelEntity;
-    }
-
-    public List<RecipeEntity> getAddedRecipes() {
-        return this.addedRecipes;
-    }
-
-    public List<RecipeEntity> getLikedRecipes() {
-        return this.likedRecipes;
-    }
-
-    public List<RecipeEntity> getSavedRecipes() {
-        return this.savedRecipes;
-    }
-
-    public List<RecipeEntity> getCookedRecipes() {
-        return this.cookedRecipes;
-    }
-
-    public List<RecipeEntity> getCommentedRecipes() {
-        return this.commentedRecipes;
     }
 }

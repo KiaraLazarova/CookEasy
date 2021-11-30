@@ -6,6 +6,7 @@ import course.springadvanced.cookeasy.model.entity.RecipeEntity;
 import course.springadvanced.cookeasy.model.entity.UserEntity;
 import course.springadvanced.cookeasy.model.service.RecipeAddServiceModel;
 import course.springadvanced.cookeasy.model.view.RecipeBriefDescriptionViewModel;
+import course.springadvanced.cookeasy.model.view.RecipeDetailsViewModel;
 import course.springadvanced.cookeasy.repository.RecipeRepository;
 import course.springadvanced.cookeasy.service.*;
 import org.modelmapper.ModelMapper;
@@ -43,12 +44,6 @@ public class RecipeServiceImpl implements RecipeService {
         int preparationTime = recipeAddServiceModel.getHours() * 60 + recipeAddServiceModel.getMinutes();
         recipe.setPreparationTime(preparationTime);
 
-        recipe.setLikes(0);
-
-        recipe.setSaves(0);
-
-        recipe.setCooks(0);
-
         CategoryEntity category = this.categoryService.findCategoryByCategoryName(recipeAddServiceModel.getCategoryNameEnum());
         recipe.setCategoryEntity(category);
 
@@ -59,8 +54,6 @@ public class RecipeServiceImpl implements RecipeService {
         recipe.setAuthor(author);
 
         this.recipeRepository.saveAndFlush(recipe);
-
-        author.getAddedRecipes().add(recipe);
     }
 
     @Override
@@ -79,11 +72,97 @@ public class RecipeServiceImpl implements RecipeService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public RecipeDetailsViewModel getRecipeDetails(Long id) {
+        RecipeEntity recipe = this.findRecipeById(id);
+
+        return this.mapToRecipeDetailsViewModel(recipe);
+    }
+
+    @Override
+    public void likeRecipe(String username, Long id) {
+        RecipeEntity recipe = this.findRecipeById(id);
+        recipe.setLikes(recipe.getLikes() + 1);
+
+        this.recipeRepository.saveAndFlush(recipe);
+
+        UserEntity user = this.userService.findUserByUsername(username);
+        user.getLikedRecipes().add(recipe);
+
+        this.userService.saveAndFlushUser(user);
+    }
+
+    @Override
+    public void saveRecipe(String username, Long id) {
+        RecipeEntity recipe = this.findRecipeById(id);
+        recipe.setSaves(recipe.getSaves() + 1);
+
+        this.recipeRepository.saveAndFlush(recipe);
+
+        UserEntity user = this.userService.findUserByUsername(username);
+        user.getSavedRecipes().add(recipe);
+
+        this.userService.saveAndFlushUser(user);
+    }
+
+    @Override
+    public void cookRecipe(String username, Long id) {
+        RecipeEntity recipe = this.findRecipeById(id);
+        recipe.setCooks(recipe.getCooks() + 1);
+
+        this.recipeRepository.saveAndFlush(recipe);
+
+        UserEntity user = this.userService.findUserByUsername(username);
+        user.getCookedRecipes().add(recipe);
+
+        this.userService.saveAndFlushUser(user);
+    }
+
     private RecipeBriefDescriptionViewModel mapToRecipeBriefDescriptionViewModel(RecipeEntity recipe) {
         RecipeBriefDescriptionViewModel recipeBriefDescriptionViewModel =
                 this.modelMapper.map(recipe, RecipeBriefDescriptionViewModel.class);
         recipeBriefDescriptionViewModel.setComments(this.commentService.getCountOfRecipeComments(recipe.getId()));
 
         return recipeBriefDescriptionViewModel;
+    }
+
+    @Override
+    public RecipeEntity findRecipeById(Long id) {
+        //TODO add error handling - object ot found exception
+        return this.recipeRepository.findById(id).get();
+    }
+
+    @Override
+    public boolean isRecipeLiked(String username, Long id) {
+        UserEntity user = this.userService.findUserByUsername(username);
+        RecipeEntity recipe = this.findRecipeById(id);
+
+        return user.getLikedRecipes().contains(recipe);
+    }
+
+    @Override
+    public boolean isRecipeSaved(String username, Long id) {
+        UserEntity user = this.userService.findUserByUsername(username);
+        RecipeEntity recipe = this.findRecipeById(id);
+
+        return user.getSavedRecipes().contains(recipe);
+    }
+
+    @Override
+    public boolean isRecipeCooked(String username, Long id) {
+        UserEntity user = this.userService.findUserByUsername(username);
+        RecipeEntity recipe = this.findRecipeById(id);
+
+        return user.getCookedRecipes().contains(recipe);
+    }
+
+    private RecipeDetailsViewModel mapToRecipeDetailsViewModel(RecipeEntity recipe) {
+        RecipeDetailsViewModel recipeDetailsViewModel = this.modelMapper.map(recipe, RecipeDetailsViewModel.class);
+        recipeDetailsViewModel.setHours(recipe.getPreparationTime() / 60);
+        recipeDetailsViewModel.setMinutes(recipe.getPreparationTime() % 60);
+        recipeDetailsViewModel.setCreatedOn(recipe.getCreatedOn().toLocalDate());
+        recipeDetailsViewModel.setComments(this.commentService.getCountOfRecipeComments(recipe.getId()));
+
+        return recipeDetailsViewModel;
     }
 }

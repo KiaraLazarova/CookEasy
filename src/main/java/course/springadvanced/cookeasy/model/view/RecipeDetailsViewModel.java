@@ -2,10 +2,17 @@ package course.springadvanced.cookeasy.model.view;
 
 import course.springadvanced.cookeasy.model.entity.CategoryEntity;
 import course.springadvanced.cookeasy.model.entity.LevelEntity;
+import course.springadvanced.cookeasy.model.entity.UserEntity;
 
-public class RecipeBriefDescriptionViewModel {
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+public class RecipeDetailsViewModel {
     private Long id;
+    private LocalDate createdOn;
     private String title;
+    private int hours;
+    private int minutes;
     private String description;
     private long likes;
     private long saves;
@@ -13,8 +20,9 @@ public class RecipeBriefDescriptionViewModel {
     private long comments;
     private CategoryEntity categoryEntity;
     private LevelEntity levelEntity;
+    private UserEntity author;
 
-    public RecipeBriefDescriptionViewModel() {
+    public RecipeDetailsViewModel() {
     }
 
     public Long getId() {
@@ -25,12 +33,36 @@ public class RecipeBriefDescriptionViewModel {
         this.id = id;
     }
 
+    public LocalDate getCreatedOn() {
+        return this.createdOn;
+    }
+
+    public void setCreatedOn(LocalDate createdOn) {
+        this.createdOn = createdOn;
+    }
+
     public String getTitle() {
         return this.title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getHours() {
+        return this.hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
+
+    public int getMinutes() {
+        return this.minutes;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
     }
 
     public String getDescription() {
@@ -87,5 +119,13 @@ public class RecipeBriefDescriptionViewModel {
 
     public void setLevelEntity(LevelEntity levelEntity) {
         this.levelEntity = levelEntity;
+    }
+
+    public UserEntity getAuthor() {
+        return this.author;
+    }
+
+    public void setAuthor(UserEntity author) {
+        this.author = author;
     }
 }

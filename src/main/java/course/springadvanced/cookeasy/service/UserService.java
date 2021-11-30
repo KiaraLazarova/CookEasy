@@ -14,4 +14,5 @@ public interface UserService {
     void editUserProfile(Long id, UserProfileEditServiceModel userProfileEditServiceModel);
     void deleteUserProfile(Long id);
     UserEntity findUserByUsername(String username);
+    void saveAndFlushUser(UserEntity user);
 }

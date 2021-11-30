@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head :: head">
+</head>
+
+<body>
+        <!--Main Navigation-->
+    <header>
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" th:replace="fragments/navbar :: navbar">
+      </nav>
+      <!-- Navbar -->
+
+      <!-- Background image -->
+      <div id="introHalf" class="bg-image shadow-2-strong">
+        <div class="mask">
+          <div class="container d-flex justify-content-center align-items-center h-100">
+            <div class="text-white text-center">
+              <br>
+              <br>
+              <h1 class="mb-3">Recipe details</h1>
+              <h5 class="mb-4">You want to add a comment? No problem - just click the button below.</h5>
+              <a class="btn btn-outline-light btn-lg m-2" href="/" role="button">Create new comment</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Background image -->
+    </header>
+    <!--Main Navigation-->
+
+    <!--Main layout-->
+    <main class="mt-5">
+      <div class="container">
+          <!--Section: Content-->
+          <section class="text-center custom-row-outline ">
+              <!-- Recipe -->
+              <div class="row align-content-center">
+                  <div th:object="${viewModel}" class="col-md-12 mb-4">
+                      <h4><strong th:text="*{title}"></strong></h4>
+                      <span class="font-weight-light text-info" style="line-height: 50px;">
+                          Published on <u th:text="*{createdOn}"></u> by @<u th:text="*{author.username}"></u>
+                      </span>
+                      <br>
+                      <br>
+                      <div class="border-top border-bottom">
+                          <br>
+                          <h6 class="text-warning text-decoration-underline">
+                              <strong>Time to prepare:</strong>
+                              <th:block th:text="*{hours}"></th:block>h <th:block th:text="*{minutes}"></th:block>min
+                          </h6>
+                          <br>
+                      </div>
+                      <br>
+                      <h6 class="text-muted text-decoration-underline"><strong>Category:</strong> <th:block th:text="*{categoryEntity.categoryNameEnum.name()}"></th:block></h6>
+                      <h6 class="text-muted text-decoration-underline"><strong>Difficulty level:</strong> <th:block th:text="*{levelEntity.levelNameEnum.name()}"></th:block></h6>
+                      <div class="d-inline-flex justify-content-start rounded-3 p-2 mb-2" style="background-color: #efefef;">
+                          <div class="px-3">
+                              <p class="small text-muted mb-1">Likes</p>
+                              <p class="mb-0" th:text="*{likes}"></p>
+                          </div>
+                          <div class="px-3">
+                              <p class="small text-muted mb-1">Saves</p>
+                              <p class="mb-0" th:text="*{saves}"></p>
+                          </div>
+                          <div class="px-3">
+                              <p class="small text-muted mb-1">Cooks</p>
+                              <p class="mb-0" th:text="*{cooks}"></p>
+                          </div>
+                          <div class="px-3">
+                              <p class="small text-muted mb-1">Comments</p>
+                              <p class="mb-0" th:text="*{comments}"></p>
+                          </div>
+                      </div>
+                      <br>
+                      <br>
+                      <div class="border-top">
+                          <br>
+                          <h5 style="color: #f58b8d;">Way of preparation&nbsp; <i class="fas fa-arrow-down"></i></h5>
+                          <br>
+                          <p class="custom-text-justify" th:text="*{description}"></p>
+                      </div>
+                      <br>
+                      <div class="d-flex justify-content-center border-top border-bottom py-4 mb-3">
+                          <form th:action="@{/recipes/{id}/details/like(id=*{id})}" th:method="patch">
+                              <input th:attr="disabled=${isRecipeLiked ? 'disabled' : null}" type="submit" id="likeBtn" class="btn custom-blue-btn ms-2" value="Like"/>
+                          </form>
+                          <form th:action="@{/recipes/{id}/details/save(id=*{id})}" th:method="patch">
+                              <input th:attr="disabled=${isRecipeSaved ? 'disabled' : null}" type="submit" id="saveBtn" class="btn custom-pink-btn ms-2" value="Save"/>
+                          </form>
+                          <form th:action="@{/recipes/{id}/details/cook(id=*{id})}" th:method="patch">
+                              <input th:attr="disabled=${isRecipeCooked ? 'disabled' : null}" type="submit" id="cookBtn" class="btn custom-blue-btn ms-2" value="Cook"/>
+                          </form>
+                          <a type="button" class="btn custom-pink-btn ms-2">Comment</a>
+                          <a th:if="*{#authentication.principal.id == author.id}" type="button" class="btn custom-blue-btn ms-2">Edit</a>
+                          <form th:if="*{#authentication.principal.id == author.id}">
+                              <input type="submit" class="btn custom-pink-btn ms-2" value="Delete"/>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+              <!-- Comments -->
+              <div class="row mb-4">
+                  <div class="col-2">
+                      <img th:src="@{/images/female_profile_avatar.png}"
+                           class="img-fluid rounded" style="width: 100px; border-color: white;"/>
+                  </div>
+
+                  <div class="col-9">
+                      <p class="mb-2"><strong>@kiara_lazarova</strong></p>
+                      <p class="custom-text-justify">
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio est ab iure
+                          inventore dolorum consectetur? Molestiae aperiam atque quasi consequatur aut?
+                          Repellendus alias dolor ad nam, soluta distinctio quis accusantium!
+                      </p>
+                  </div>
+              </div>
+          </section>
+      </div>
+    </main>
+    <!--Main layout-->
+
+    <br>
+    <br>
+    <hr class="m-0" />
+
+    <!--Footer-->
+    <footer class="bg-light text-lg-start" th:replace="fragments/footer :: footer">
+    </footer>
+    <!--Footer-->
+
+    <!-- MDB -->
+    <script type="text/javascript" src="/js/mdb.min.js"></script>
+</body>
+</html>

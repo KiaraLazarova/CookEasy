@@ -37,7 +37,7 @@
         <!--Section: Content-->
         <section class="text-center">
           <!-- Recipe -->
-          <div th:each="viewModel : ${viewModels}" th:object="${viewModel}" class="row custom-row-outline">
+          <div th:each="viewModel : ${viewModels}" th:object="${viewModel}" class="row custom-row-outline mt-3">
             <div class="col-md-4 mb-4">
               <div class="bg-image hover-overlay shadow-1-strong rounded ripple" data-mdb-ripple-color="light">
                 <img src="https://mdbootstrap.com/img/new/standard/nature/002.jpg" class="img-fluid" />
@@ -54,26 +54,27 @@
               <div class="d-inline-flex justify-content-start rounded-3 p-2 mb-2" style="background-color: #efefef;">
                   <div class="px-3">
                       <p class="small text-muted mb-1">Likes</p>
-                      <p class="mb-0"><th:block th:text="*{likes}"></th:block></p>
+                      <p class="mb-0" th:text="*{likes}"></p>
                   </div>
                   <div class="px-3">
                       <p class="small text-muted mb-1">Saves</p>
-                      <p class="mb-0"><th:block th:text="*{saves}"></th:block></p>
+                      <p class="mb-0" th:text="*{saves}"></p>
                   </div>
                   <div class="px-3">
                       <p class="small text-muted mb-1">Cooks</p>
-                      <p class="mb-0"><th:block th:text="*{cooks}"></th:block></p>
+                      <p class="mb-0" th:text="*{cooks}"></p>
                   </div>
                   <div class="px-3">
                       <p class="small text-muted mb-1">Comments</p>
-                      <p class="mb-0"><th:block th:text="*{comments}"></th:block></p>
+                      <p class="mb-0" th:text="*{comments}"></p>
                   </div>
               </div>
               <br>
-              <p class="custom-text-justify">
+              <p th:if="*{description.length() > 237}" class="custom-text-justify">
                   <th:block th:text="*{#strings.substring(description, 0, 237).trim()}"></th:block>...
               </p>
-              <a type="button" class="btn custom-pink-btn" href="/">Read more</a>
+              <p th:if="*{description.length() <= 237}" class="custom-text-justify" th:text="*{description.trim()}"></p>
+              <a type="button" class="btn custom-pink-btn" th:href="@{/recipes/{id}/details(id=*{id})}">Read more</a>
             </div>
           </div>
         </section>
