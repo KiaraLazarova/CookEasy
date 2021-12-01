@@ -11,7 +11,7 @@ public class RecipeEditBindingModel {
     @Max(value = 23)
     private int hours;
     @NotNull
-    @Min(value = 0)
+    @Min(value = 1)
     @Max(value = 59)
     private int minutes;
     @NotNull

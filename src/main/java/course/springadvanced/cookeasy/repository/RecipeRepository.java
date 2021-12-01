@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface RecipeRepository extends JpaRepository<RecipeEntity, Long> {
     Optional<RecipeEntity> findByTitle(String title);
 
-    @Query(value = "SELECT r FROM RecipeEntity AS r WHERE r.levelEntity.id = :levelId ORDER BY r.categoryEntity.id ASC")
+    @Query(value = "SELECT r FROM RecipeEntity AS r WHERE r.levelEntity.id = :levelId ORDER BY r.categoryEntity.id ASC, r.createdOn DESC")
     List<RecipeEntity> findAllByLevelEntityByOrderByCategoryNameEnumAsc(@Param(value = "levelId") Long id);
 }
