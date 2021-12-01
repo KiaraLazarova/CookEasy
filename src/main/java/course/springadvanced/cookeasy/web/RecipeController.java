@@ -1,7 +1,9 @@
 package course.springadvanced.cookeasy.web;
 
 import course.springadvanced.cookeasy.model.binding.RecipeAddBindingModel;
+import course.springadvanced.cookeasy.model.binding.RecipeEditBindingModel;
 import course.springadvanced.cookeasy.model.service.RecipeAddServiceModel;
+import course.springadvanced.cookeasy.model.service.RecipeEditServiceModel;
 import course.springadvanced.cookeasy.model.view.RecipeBriefDescriptionViewModel;
 import course.springadvanced.cookeasy.model.view.RecipeDetailsViewModel;
 import course.springadvanced.cookeasy.service.RecipeService;
@@ -116,19 +118,33 @@ public class RecipeController {
         return "redirect:/recipes/" + id + "/details";
     }
 
+    @GetMapping(value = "/recipes/{id}/details/edit")
+    public String retrieveRecipeEditPage(@PathVariable(name = "id") Long id, Model model) {
+        RecipeDetailsViewModel recipeDetailsViewModel = this.recipeService.getRecipeDetails(id);
+        RecipeEditBindingModel recipeEditBindingModel = this.modelMapper.map(recipeDetailsViewModel, RecipeEditBindingModel.class);
+
+        model.addAttribute("editBindingModel", recipeEditBindingModel);
+
+        return "recipe-edit";
+    }
+
     @PatchMapping(value = "/recipes/{id}/details/edit")
-    public String editRecipe(@PathVariable(name = "id") Long id) {
-        //TODO create recipe edit binding model - validate
-        //TODO create recipe edit service model
-        //TODO create edit recipe method in recipe service
-        //TODO implement edit recipe method in recipe service - return type void
-        //TODO pass recipe edit binding model as parameter to controller method
-        //TODO validate recipe edit binding model
-        //TODO map recipe edit binding model to recipe edit service model
-        //TODO pass recipe edit service model as parameter to edit recipe method in recipe service
-        //TODO redirect to /recipes/{id}/details
-        //TODO add template form method attributes - th:action, th:method (patch), th:field
-        return null;
+    public String editRecipe(@PathVariable(name = "id") Long id,
+                             @Valid RecipeEditBindingModel recipeEditBindingModel,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes) {
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("editBindingModel", recipeEditBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editBindingModel", bindingResult);
+
+            return "redirect:/recipes/" + id + "/details/edit";
+        }
+
+        RecipeEditServiceModel recipeEditServiceModel = this.modelMapper.map(recipeEditBindingModel, RecipeEditServiceModel.class);
+
+        this.recipeService.editRecipe(id, recipeEditServiceModel);
+
+        return "redirect:/recipes/" + id + "/details";
     }
 
     @DeleteMapping(value = "/recipes/{id}/details/delete")

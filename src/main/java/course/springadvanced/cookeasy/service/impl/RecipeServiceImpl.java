@@ -4,7 +4,10 @@ import course.springadvanced.cookeasy.model.entity.CategoryEntity;
 import course.springadvanced.cookeasy.model.entity.LevelEntity;
 import course.springadvanced.cookeasy.model.entity.RecipeEntity;
 import course.springadvanced.cookeasy.model.entity.UserEntity;
+import course.springadvanced.cookeasy.model.entity.enumeration.CategoryNameEnum;
+import course.springadvanced.cookeasy.model.entity.enumeration.LevelNameEnum;
 import course.springadvanced.cookeasy.model.service.RecipeAddServiceModel;
+import course.springadvanced.cookeasy.model.service.RecipeEditServiceModel;
 import course.springadvanced.cookeasy.model.view.RecipeBriefDescriptionViewModel;
 import course.springadvanced.cookeasy.model.view.RecipeDetailsViewModel;
 import course.springadvanced.cookeasy.repository.RecipeRepository;
@@ -41,14 +44,12 @@ public class RecipeServiceImpl implements RecipeService {
 
         recipe.setCreatedOn(LocalDateTime.now());
 
-        int preparationTime = recipeAddServiceModel.getHours() * 60 + recipeAddServiceModel.getMinutes();
-        recipe.setPreparationTime(preparationTime);
-
-        CategoryEntity category = this.categoryService.findCategoryByCategoryName(recipeAddServiceModel.getCategoryNameEnum());
-        recipe.setCategoryEntity(category);
-
-        LevelEntity level = this.levelService.findLevelByLevelName(recipeAddServiceModel.getLevelNameEnum());
-        recipe.setLevelEntity(level);
+        this.updateRecipeEntity(recipeAddServiceModel.getHours(),
+                recipeAddServiceModel.getMinutes(),
+                recipeAddServiceModel.getCategoryNameEnum(),
+                recipeAddServiceModel.getLevelNameEnum(),
+                recipe
+        );
 
         UserEntity author = this.userService.findUserByUsername(username);
         recipe.setAuthor(author);
@@ -118,14 +119,6 @@ public class RecipeServiceImpl implements RecipeService {
         this.userService.saveAndFlushUser(user);
     }
 
-    private RecipeBriefDescriptionViewModel mapToRecipeBriefDescriptionViewModel(RecipeEntity recipe) {
-        RecipeBriefDescriptionViewModel recipeBriefDescriptionViewModel =
-                this.modelMapper.map(recipe, RecipeBriefDescriptionViewModel.class);
-        recipeBriefDescriptionViewModel.setComments(this.commentService.getCountOfRecipeComments(recipe.getId()));
-
-        return recipeBriefDescriptionViewModel;
-    }
-
     @Override
     public RecipeEntity findRecipeById(Long id) {
         //TODO add error handling - object ot found exception
@@ -156,6 +149,31 @@ public class RecipeServiceImpl implements RecipeService {
         return user.getCookedRecipes().contains(recipe);
     }
 
+    @Override
+    public void editRecipe(Long id, RecipeEditServiceModel recipeEditServiceModel) {
+        RecipeEntity recipe = this.findRecipeById(id);
+
+        /* Partial update of recipe entity => no model mapper used here */
+        this.updateRecipeEntity(recipeEditServiceModel.getHours(),
+                                recipeEditServiceModel.getMinutes(),
+                                recipeEditServiceModel.getCategoryNameEnum(),
+                                recipeEditServiceModel.getLevelNameEnum(),
+                                recipe
+        );
+
+        recipe.setDescription(recipeEditServiceModel.getDescription());
+
+        this.recipeRepository.saveAndFlush(recipe);
+    }
+
+    private RecipeBriefDescriptionViewModel mapToRecipeBriefDescriptionViewModel(RecipeEntity recipe) {
+        RecipeBriefDescriptionViewModel recipeBriefDescriptionViewModel =
+                this.modelMapper.map(recipe, RecipeBriefDescriptionViewModel.class);
+        recipeBriefDescriptionViewModel.setComments(this.commentService.getCountOfRecipeComments(recipe.getId()));
+
+        return recipeBriefDescriptionViewModel;
+    }
+
     private RecipeDetailsViewModel mapToRecipeDetailsViewModel(RecipeEntity recipe) {
         RecipeDetailsViewModel recipeDetailsViewModel = this.modelMapper.map(recipe, RecipeDetailsViewModel.class);
         recipeDetailsViewModel.setHours(recipe.getPreparationTime() / 60);
@@ -164,5 +182,17 @@ public class RecipeServiceImpl implements RecipeService {
         recipeDetailsViewModel.setComments(this.commentService.getCountOfRecipeComments(recipe.getId()));
 
         return recipeDetailsViewModel;
+    }
+
+    private void updateRecipeEntity(int hours, int minutes, CategoryNameEnum categoryNameEnum, LevelNameEnum levelNameEnum, RecipeEntity recipe) {
+        /* Update recipe entity */
+        int preparationTime = hours * 60 + minutes;
+        recipe.setPreparationTime(preparationTime);
+
+        CategoryEntity category = this.categoryService.findCategoryByCategoryName(categoryNameEnum);
+        recipe.setCategoryEntity(category);
+
+        LevelEntity level = this.levelService.findLevelByLevelName(levelNameEnum);
+        recipe.setLevelEntity(level);
     }
 }

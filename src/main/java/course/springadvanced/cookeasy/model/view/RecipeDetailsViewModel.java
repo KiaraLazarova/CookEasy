@@ -3,9 +3,7 @@ package course.springadvanced.cookeasy.model.view;
 import course.springadvanced.cookeasy.model.entity.CategoryEntity;
 import course.springadvanced.cookeasy.model.entity.LevelEntity;
 import course.springadvanced.cookeasy.model.entity.UserEntity;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class RecipeDetailsViewModel {
     private Long id;

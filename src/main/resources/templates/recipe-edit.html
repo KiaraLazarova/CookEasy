@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head">
+</head>
+
+<body>
+  <!-- MDB script -->
+  <script type="text/javascript" src="/js/mdb.min.js"></script>
+
+  <!--Main Navigation-->
+  <header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" th:replace="fragments/navbar :: navbar">
+    </nav>
+    <!-- Navbar -->
+
+    <!-- Background image -->
+    <div id="intro" class="shadow-2-strong">
+      <div class="mask d-flex align-items-center h-100">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-5 col-md-8 mt-5">
+              <!-- MY NOTE: If you want to lessen the height of the form, change p-5 class to p-4 class -->
+              <!-- MY NOTE: If you want to add CUSTOM validation, add novalidate attribute to the form tag + needs-validation to the form class list -->
+              <form th:object="${editBindingModel}" th:action="@{/recipes/{id}/details/edit(id=*{id})}" th:method="patch" class="bg-white rounded shadow-5-strong p-4">
+                <h4 class="mb-4 text-center"><strong>Edit your delicious recipe</strong></h4>
+                <!-- 2 column grid layout with text inputs for the hours and minutes needed in order to prepare the recipe -->
+                <div class="row mb-4">
+                  <!-- Hours needed for preparation input -->
+                  <div class="col">
+                    <div class="form-outline">
+                      <input th:field="*{hours}" type="number" id="hours" class="form-control" required min="0" max="23" aria-describedby="hoursHelpInline" />
+                      <label class="form-label" for="hours">Hours to prepare</label>
+                    </div>
+                  </div>
+                  <!-- Minutes needed for preparation input -->
+                  <div class="col">
+                    <div class="form-outline">
+                      <input th:field="*{minutes}" type="number" id="minutes" class="form-control" required min="0" max="59" aria-describedby="minutesHelpInline" />
+                      <label class="form-label" for="minutes">Minutes to prepare</label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 2 column grid layout with select inputs for the category and level name enums -->
+                <div class="row mb-4">
+                  <!-- Category select input -->
+                  <div class="col">
+                    <div class="form-outline">
+                      <select th:field="*{categoryNameEnum}" id="category" class="browser-default custom-select form-select" required aria-describedby="categoryHelpInline">
+                        <option value="" selected>Choose category</option>
+                        <option th:each="category : ${T(course.springadvanced.cookeasy.model.entity.enumeration.CategoryNameEnum).values()}"
+                              th:value="${category}" th:text="${#strings.toLowerCase(category)}"></option>
+                      </select>
+                    </div>
+                  </div>
+                  <!-- Level select input -->
+                  <div class="col">
+                    <div class="form-outline">
+                      <select th:field="*{levelNameEnum}" id="recipeLevel" class="browser-default custom-select form-select" required aria-describedby="levelHelpInline">
+                        <option value="" selected>Choose level</option>
+                        <option th:each="level : ${T(course.springadvanced.cookeasy.model.entity.enumeration.LevelNameEnum).values()}"
+                                th:value="${level}" th:text="${#strings.toLowerCase(level)}"
+                                th:attr="disabled=${level != #authentication.principal.levelEntity.levelNameEnum ? 'disabled' : null}">
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="md-form mb-4">
+                  <textarea th:field="*{description}" class="md-textarea form-control" id="description" rows="4" placeholder="Write the method of preparation..." required minlength="10" aria-describedby="descriptionHelpInline"></textarea>
+                </div>
+
+                <p class="text-center text-warning">
+                  <strong class="text-decoration-underline">Important:</strong>
+                  Recipe level corresponds to your profile level.
+                </p>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-block mb-3 custom-pink-btn">Save changes</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Background image -->
+  </header>
+  <!--Main Navigation-->
+
+  <!--Footer-->
+  <footer class="bg-light text-lg-start" th:replace="fragments/footer :: footer">
+  </footer>
+  <!--Footer-->
+
+  <!-- MDB script -->
+  <script type="text/javascript" src="/js/mdb.min.js"></script>
+</body>
+
+</html>

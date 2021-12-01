@@ -94,7 +94,7 @@
                               <input th:attr="disabled=${isRecipeCooked ? 'disabled' : null}" type="submit" id="cookBtn" class="btn custom-blue-btn ms-2" value="Cook"/>
                           </form>
                           <a type="button" class="btn custom-pink-btn ms-2">Comment</a>
-                          <a th:if="*{#authentication.principal.id == author.id}" type="button" class="btn custom-blue-btn ms-2">Edit</a>
+                          <a th:if="*{#authentication.principal.id == author.id}" th:href="@{/recipes/{id}/details/edit(id=*{id})}" type="button" class="btn custom-blue-btn ms-2">Edit</a>
                           <form th:if="*{#authentication.principal.id == author.id}">
                               <input type="submit" class="btn custom-pink-btn ms-2" value="Delete"/>
                           </form>
