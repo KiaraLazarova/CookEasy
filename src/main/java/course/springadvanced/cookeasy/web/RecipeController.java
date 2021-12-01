@@ -149,10 +149,8 @@ public class RecipeController {
 
     @DeleteMapping(value = "/recipes/{id}/details/delete")
     public String deleteRecipe(@PathVariable(name = "id") Long id) {
-        //TODO create delete recipe method in recipe service
-        //TODO implement delete recipe method in recipe service - return type void
-        //TODO redirect to /recipes
-        //TODO add template form method attributes - th:action, th:method (delete)
-        return null;
+        this.recipeService.deleteRecipe(id);
+
+        return "redirect:/recipes";
     }
 }

@@ -141,6 +141,11 @@ public class UserServiceImpl implements UserService {
         this.userRepository.saveAndFlush(user);
     }
 
+    @Override
+    public List<UserEntity> findAllUsers() {
+        return this.userRepository.findAll();
+    }
+
     private UserEntity findUserById(Long id) {
         //TODO add error handling - object not found exception
         return this.userRepository.findById(id).get();

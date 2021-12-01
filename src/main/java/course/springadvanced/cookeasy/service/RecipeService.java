@@ -20,4 +20,5 @@ public interface RecipeService {
     boolean isRecipeSaved(String username, Long id);
     boolean isRecipeCooked(String username, Long id);
     void editRecipe(Long id, RecipeEditServiceModel recipeEditServiceModel);
+    void deleteRecipe(Long id);
 }

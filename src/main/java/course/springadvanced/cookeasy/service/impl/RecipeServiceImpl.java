@@ -166,6 +166,21 @@ public class RecipeServiceImpl implements RecipeService {
         this.recipeRepository.saveAndFlush(recipe);
     }
 
+    @Override
+    public void deleteRecipe(Long id) {
+        RecipeEntity recipe = this.findRecipeById(id);
+
+        List<UserEntity> users = this.userService.findAllUsers();
+
+        users.forEach(u -> {
+            u.getLikedRecipes().remove(recipe);
+            u.getSavedRecipes().remove(recipe);
+            u.getCookedRecipes().remove(recipe);
+        });
+
+        this.recipeRepository.delete(recipe);
+    }
+
     private RecipeBriefDescriptionViewModel mapToRecipeBriefDescriptionViewModel(RecipeEntity recipe) {
         RecipeBriefDescriptionViewModel recipeBriefDescriptionViewModel =
                 this.modelMapper.map(recipe, RecipeBriefDescriptionViewModel.class);
