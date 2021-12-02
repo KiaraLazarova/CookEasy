@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head">
+</head>
+
+<body>
+  <!-- MDB script -->
+  <script type="text/javascript" src="/js/mdb.min.js"></script>
+
+  <!--Main Navigation-->
+  <header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" th:replace="fragments/navbar :: navbar">
+    </nav>
+    <!-- Navbar -->
+
+    <!-- Background image -->
+    <div id="intro" class="shadow-2-strong">
+      <div class="mask d-flex align-items-center h-100">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-5 col-md-8 mt-5">
+              <!-- MY NOTE: If you want to lessen the height of the form, change p-5 class to p-4 class -->
+              <!-- MY NOTE: If you want to add CUSTOM validation, add novalidate attribute to the form tag + needs-validation to the form class list -->
+              <form th:object="${bindingModel}" th:action="@{/recipes/{id}/details/comment(id=${recipeId})}" th:method="post" id="postCommentForm" class="bg-white rounded shadow-5-strong p-4">
+                <h4 class="mb-4 text-center"><strong>Leave your meaningful comment</strong></h4>
+
+                <p class="text-info text-center" style="line-height: 1.5; !important;">
+                  <strong><u>INFORMATION:</u></strong>
+                  You are about to post a comment on recipe with title
+                  <strong><u th:text="${recipeTitle}"></u></strong>
+                  published by <strong>@<u th:text="${authorUsername}"></u></strong>!
+                </p>
+
+                <!-- Content input -->
+                <div class="md-form mb-4">
+                  <textarea th:field="*{content}" id="content" class="md-textarea form-control" rows="4" placeholder="Write your comment..." required minlength="10" aria-describedby="contentHelpInline"></textarea>
+                </div>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-block mb-3 custom-pink-btn">Post</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Background image -->
+  </header>
+  <!--Main Navigation-->
+
+  <!--Footer-->
+  <footer class="bg-light text-lg-start" th:replace="fragments/footer :: footer">
+  </footer>
+  <!--Footer-->
+
+  <!-- MDB script -->
+  <script type="text/javascript" src="/js/mdb.min.js"></script>
+  <!-- Custom script -->
+  <script type="text/javascript" src="/js/display_comment_alert.js"></script>
+</body>
+
+</html>

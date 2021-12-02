@@ -331,6 +331,16 @@ public class RecipeServiceImpl implements RecipeService {
         this.recipeRepository.delete(recipe);
     }
 
+    @Override
+    public String getRecipeTitle(Long id) {
+        return this.findRecipeById(id).getTitle();
+    }
+
+    @Override
+    public String getRecipeAuthorUsername(Long id) {
+        return this.findRecipeById(id).getAuthor().getUsername();
+    }
+
     private RecipeBriefDescriptionViewModel mapToRecipeBriefDescriptionViewModel(RecipeEntity recipe) {
         RecipeBriefDescriptionViewModel recipeBriefDescriptionViewModel =
                 this.modelMapper.map(recipe, RecipeBriefDescriptionViewModel.class);
@@ -350,10 +360,10 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     private void partialUpdateOfRecipeEntity(int hours, int minutes,
-                                    String description,
-                                    CategoryNameEnum categoryNameEnum,
-                                    LevelNameEnum levelNameEnum,
-                                    RecipeEntity recipe) {
+                                             String description,
+                                             CategoryNameEnum categoryNameEnum,
+                                             LevelNameEnum levelNameEnum,
+                                             RecipeEntity recipe) {
         /* Update recipe entity */
         int preparationTime = hours * 60 + minutes;
         recipe.setPreparationTime(preparationTime);
@@ -368,12 +378,12 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     private void fullSetUpOfRecipeEntity(int hours, int minutes,
-                                          String description,
-                                          String username,
-                                          String title,
-                                          CategoryNameEnum categoryNameEnum,
-                                          LevelNameEnum levelNameEnum,
-                                          RecipeEntity recipe) {
+                                         String description,
+                                         String username,
+                                         String title,
+                                         CategoryNameEnum categoryNameEnum,
+                                         LevelNameEnum levelNameEnum,
+                                         RecipeEntity recipe) {
         recipe.setCreatedOn(LocalDateTime.now());
 
         recipe.setTitle(title);

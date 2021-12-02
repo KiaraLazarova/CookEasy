@@ -3,6 +3,7 @@ package course.springadvanced.cookeasy.service.impl;
 import course.springadvanced.cookeasy.model.entity.CommentEntity;
 import course.springadvanced.cookeasy.model.entity.RecipeEntity;
 import course.springadvanced.cookeasy.model.entity.UserEntity;
+import course.springadvanced.cookeasy.model.service.CommentPostServiceModel;
 import course.springadvanced.cookeasy.model.view.CommentDisplayViewModel;
 import course.springadvanced.cookeasy.repository.CommentRepository;
 import course.springadvanced.cookeasy.service.CommentService;
@@ -115,6 +116,23 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteComment(Long id) {
         this.commentRepository.deleteById(id);
+    }
+
+    @Override
+    public void postComment(String username, Long recipeId, CommentPostServiceModel commentPostServiceModel) {
+        CommentEntity comment = this.modelMapper.map(commentPostServiceModel, CommentEntity.class);
+
+        comment.setApproved(false);
+
+        comment.setCreatedOn(LocalDateTime.now());
+
+        RecipeEntity recipe = this.recipeService.findRecipeById(recipeId);
+        comment.setRecipeEntity(recipe);
+
+        UserEntity author = this.userService.findUserByUsername(username);
+        comment.setAuthor(author);
+
+        this.commentRepository.saveAndFlush(comment);
     }
 
     private void initializeComment(boolean isApproved, String content, Long recipeId, String username) {

@@ -1,6 +1,7 @@
 package course.springadvanced.cookeasy.service;
 
 import course.springadvanced.cookeasy.model.entity.CommentEntity;
+import course.springadvanced.cookeasy.model.service.CommentPostServiceModel;
 import course.springadvanced.cookeasy.model.view.CommentDisplayViewModel;
 import java.util.List;
 
@@ -12,4 +13,5 @@ public interface CommentService {
     List<CommentEntity> findAllCommentsByRecipeId(Long recipeId);
     List<CommentEntity> findAllCommentsByAuthorId(Long authorId);
     void deleteComment(Long id);
+    void postComment(String username, Long recipeId, CommentPostServiceModel commentPostServiceModel);
 }

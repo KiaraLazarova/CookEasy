@@ -96,7 +96,7 @@
                           <form th:action="@{/recipes/{id}/details/cook(id=*{id})}" th:method="patch">
                               <input th:attr="disabled=${isRecipeCooked ? 'disabled' : null}" type="submit" id="cookBtn" class="btn custom-blue-btn ms-2" value="Cook"/>
                           </form>
-                          <a type="button" class="btn custom-pink-btn ms-2">Comment</a>
+                          <a th:href="@{/recipes/{id}/details/comment(id=*{id})}" type="button" class="btn custom-pink-btn ms-2">Comment</a>
                           <a th:if="*{#authentication.principal.id == author.id}" th:href="@{/recipes/{id}/details/edit(id=*{id})}" type="button" class="btn custom-blue-btn ms-2">Edit</a>
                           <form th:if="*{#authentication.principal.id == author.id}" th:action="@{/recipes/{id}/details/delete(id=*{id})}" th:method="delete">
                               <input type="submit" class="btn custom-pink-btn ms-2" value="Delete"/>
