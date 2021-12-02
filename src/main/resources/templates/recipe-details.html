@@ -39,6 +39,9 @@
               <!-- Recipe -->
               <div class="row align-content-center">
                   <div th:object="${viewModel}" class="col-md-12 mb-4">
+
+                      <input type="hidden" name="id" id="recipeId" th:value="*{id}">
+
                       <h4><strong th:text="*{title}"></strong></h4>
                       <span class="font-weight-light text-info" style="line-height: 50px;">
                           Published on <u th:text="*{createdOn}"></u> by @<u th:text="*{author.username}"></u>
@@ -101,22 +104,7 @@
                       </div>
                   </div>
               </div>
-              <!-- Comments -->
-              <div class="row mb-4">
-                  <div class="col-2">
-                      <img th:src="@{/images/female_profile_avatar.png}"
-                           class="img-fluid rounded" style="width: 100px; border-color: white;"/>
-                  </div>
-
-                  <div class="col-9">
-                      <p class="mb-2"><strong>@kiara_lazarova</strong></p>
-                      <p class="custom-text-justify">
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio est ab iure
-                          inventore dolorum consectetur? Molestiae aperiam atque quasi consequatur aut?
-                          Repellendus alias dolor ad nam, soluta distinctio quis accusantium!
-                      </p>
-                  </div>
-              </div>
+              <div id="commentsDiv"></div>
           </section>
       </div>
     </main>
@@ -131,7 +119,10 @@
     </footer>
     <!--Footer-->
 
-    <!-- MDB -->
+    <!-- MDB script -->
     <script type="text/javascript" src="/js/mdb.min.js"></script>
+
+    <!-- Custom script -->
+    <script type="text/javascript" src="/js/display_comments_script.js"></script>
 </body>
 </html>

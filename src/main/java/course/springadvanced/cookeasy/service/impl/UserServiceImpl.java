@@ -11,6 +11,7 @@ import course.springadvanced.cookeasy.repository.UserRepository;
 import course.springadvanced.cookeasy.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,16 +27,18 @@ public class UserServiceImpl implements UserService {
     private final GenderService genderService;
     private final LevelService levelService;
     private final CookEasyUserServiceImpl cookEasyUserService;
+    private final CommentService commentService;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleService roleService, GenderService genderService, LevelService levelService, CookEasyUserServiceImpl cookEasyUserService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleService roleService, GenderService genderService, LevelService levelService, CookEasyUserServiceImpl cookEasyUserService, @Lazy CommentService commentService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.genderService = genderService;
         this.levelService = levelService;
         this.cookEasyUserService = cookEasyUserService;
+        this.commentService = commentService;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
     }
@@ -44,29 +47,35 @@ public class UserServiceImpl implements UserService {
     public void initializeUsers() {
         if(this.userRepository.count() != 0) return;
 
-        UserEntity admin = new UserEntity();
+        this.initializeUser(
+                "ivan_lazarov",
+                "Ivan",
+                "Lazarov",
+                "ivan_lazarov@gmail.com",
+                "12345",
+                GenderNameEnum.MALE,
+                LevelNameEnum.BEGINNER
+        );
 
-        admin.setUsername("kiara_lazarova");
+        this.initializeUser(
+                "daniel_lazarov",
+                "Daniel",
+                "Lazarov",
+                "daniel_lazarov@gmail.com",
+                "12345",
+                GenderNameEnum.MALE,
+                LevelNameEnum.INTERMEDIATE
+        );
 
-        admin.setFirstName("Kiara");
-
-        admin.setLastName("Lazarova");
-
-        admin.setEmail("kiara_lazarova@gmail.com");
-
-        admin.setPassword(this.passwordEncoder.encode("12345"));
-
-        GenderEntity gender = this.genderService.findGenderByGenderName(GenderNameEnum.FEMALE);
-        admin.setGenderEntity(gender);
-
-        LevelEntity level = this.levelService.findLevelByLevelName(LevelNameEnum.ADVANCED);
-        admin.setLevelEntity(level);
-
-        RoleEntity userRole = this.roleService.findRoleByRoleName(RoleNameEnum.USER);
-        RoleEntity adminRole = this.roleService.findRoleByRoleName(RoleNameEnum.ADMIN);
-        admin.setRoles(List.of(userRole, adminRole));
-
-        this.userRepository.saveAndFlush(admin);
+        this.initializeAdmin(
+                "kiara_lazarova",
+                "Kiara",
+                "Lazarova",
+                "kiara_lazarova@gmail.com",
+                "12345",
+                GenderNameEnum.FEMALE,
+                LevelNameEnum.ADVANCED
+        );
     }
 
     @Override
@@ -125,6 +134,14 @@ public class UserServiceImpl implements UserService {
         user.getSavedRecipes().forEach(r -> r.setSaves(r.getSaves() - 1));
         user.getCookedRecipes().forEach(r -> r.setCooks(r.getCooks() - 1));
 
+        user.setLikedRecipes(null);
+        user.setSavedRecipes(null);
+        user.setCookedRecipes(null);
+
+        List<CommentEntity> comments = this.commentService.findAllCommentsByAuthorId(id);
+
+        comments.forEach(c -> this.commentService.deleteComment(c.getId()));
+
         this.userRepository.delete(user);
 
         SecurityContextHolder.getContext().setAuthentication(null);
@@ -144,6 +161,42 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserEntity> findAllUsers() {
         return this.userRepository.findAll();
+    }
+
+    private UserEntity initializeUser(String username, String firstName, String lastName, String email, String password,
+                                GenderNameEnum genderNameEnum, LevelNameEnum levelNameEnum) {
+        UserEntity user = new UserEntity();
+
+        user.setUsername(username);
+
+        user.setFirstName(firstName);
+
+        user.setLastName(lastName);
+
+        user.setEmail(email);
+
+        user.setPassword(this.passwordEncoder.encode(password));
+
+        GenderEntity gender = this.genderService.findGenderByGenderName(genderNameEnum);
+        user.setGenderEntity(gender);
+
+        LevelEntity level = this.levelService.findLevelByLevelName(levelNameEnum);
+        user.setLevelEntity(level);
+
+        RoleEntity userRole = this.roleService.findRoleByRoleName(RoleNameEnum.USER);
+        user.getRoles().add(userRole);
+
+        return this.userRepository.saveAndFlush(user);
+    }
+
+    private void initializeAdmin(String username, String firstName, String lastName, String email, String password,
+                                 GenderNameEnum genderNameEnum, LevelNameEnum levelNameEnum) {
+        UserEntity user = this.initializeUser(username, firstName, lastName, email, password, genderNameEnum, levelNameEnum);
+
+        RoleEntity adminRole = this.roleService.findRoleByRoleName(RoleNameEnum.ADMIN);
+        user.getRoles().add(adminRole);
+
+        this.userRepository.saveAndFlush(user);
     }
 
     private UserEntity findUserById(Long id) {

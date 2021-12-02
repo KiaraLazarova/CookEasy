@@ -24,6 +24,7 @@ public class UserProfileController {
         this.modelMapper = modelMapper;
     }
 
+    //TODO add @PreAuthorize("isOwner(#id)")
     @GetMapping(value = "/users/{id}/profile")
     public String retrieveProfilePage(@PathVariable(name = "id") Long id, Model model) {
         UserProfileDetailsViewModel userProfileDetailsViewModel = this.userService.getUserProfileDetails(id);
@@ -33,6 +34,7 @@ public class UserProfileController {
         return "profile";
     }
 
+    //TODO add @PreAuthorize("isOwner(#id)")
     @GetMapping(value = "/users/{id}/profile/edit")
     public String retrieveProfileEditPage(@PathVariable(name = "id") Long id, Model model) {
         UserProfileDetailsViewModel userProfileDetailsViewModel = this.userService.getUserProfileDetails(id);
@@ -43,6 +45,7 @@ public class UserProfileController {
         return "profile-edit";
     }
 
+    //TODO add @PreAuthorize("isOwner(#id)")
     @PatchMapping(value = "/users/{id}/profile/edit")
     public String editUserProfile(@PathVariable(name = "id") Long id,
                                   @Valid UserProfileEditBindingModel userProfileEditBindingModel,
@@ -62,6 +65,7 @@ public class UserProfileController {
         return "redirect:/users/" + id + "/profile";
     }
 
+    //TODO add @PreAuthorize("isOwner(#id)")
     @DeleteMapping(value = "/users/{id}/profile/delete")
     public String deleteUserProfile(@PathVariable(name = "id") Long id) {
         this.userService.deleteUserProfile(id);

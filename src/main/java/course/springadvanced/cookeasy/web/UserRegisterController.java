@@ -5,6 +5,7 @@ import course.springadvanced.cookeasy.model.service.UserRegisterServiceModel;
 import course.springadvanced.cookeasy.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,11 +40,13 @@ public class UserRegisterController {
         return false;
     }
 
+    @PreAuthorize("!isAuthenticated()")
     @GetMapping(value = "/users/register")
     public String retrieveRegisterPage() {
         return "auth-register";
     }
 
+    @PreAuthorize("!isAuthenticated()")
     @PostMapping(value = "/users/register")
     public String registerAndLoginUser(@Valid UserRegisterBindingModel userRegisterBindingModel,
                                        BindingResult bindingResult,

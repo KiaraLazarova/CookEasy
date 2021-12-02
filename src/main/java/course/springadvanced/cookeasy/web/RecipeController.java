@@ -9,6 +9,7 @@ import course.springadvanced.cookeasy.model.view.RecipeDetailsViewModel;
 import course.springadvanced.cookeasy.service.RecipeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,6 +40,7 @@ public class RecipeController {
         return false;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/recipes")
     public String retrieveRecipesPage(Model model, Principal principal) {
         List<RecipeBriefDescriptionViewModel> recipeBriefDescriptionViewModels =
@@ -49,6 +51,7 @@ public class RecipeController {
         return "recipes";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/recipes/add")
     public String retrieveRecipeAddPage() {
         return "recipe-add";
@@ -76,8 +79,10 @@ public class RecipeController {
         return "redirect:/recipes";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/recipes/{id}/details")
     public String retrieveRecipeDetailsPage(@PathVariable(name = "id") Long id, Model model, Principal principal) {
+        //TODO check if current user level corresponds to current recipe level => - (return "redirect:/recipes")
         RecipeDetailsViewModel recipeDetailsViewModel = this.recipeService.getRecipeDetails(id);
 
         model.addAttribute("viewModel", recipeDetailsViewModel);
@@ -97,6 +102,7 @@ public class RecipeController {
         return "recipe-details";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PatchMapping(value = "/recipes/{id}/details/like")
     public String likeRecipe(@PathVariable Long id, Principal principal) {
         this.recipeService.likeRecipe(principal.getName(), id);
@@ -104,6 +110,7 @@ public class RecipeController {
         return "redirect:/recipes/" + id + "/details";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PatchMapping(value = "/recipes/{id}/details/save")
     public String saveRecipe(@PathVariable Long id, Principal principal) {
         this.recipeService.saveRecipe(principal.getName(), id);
@@ -111,6 +118,7 @@ public class RecipeController {
         return "redirect:/recipes/" + id + "/details";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PatchMapping(value = "/recipes/{id}/details/cook")
     public String cookRecipe(@PathVariable Long id, Principal principal) {
         this.recipeService.cookRecipe(principal.getName(), id);
@@ -118,6 +126,7 @@ public class RecipeController {
         return "redirect:/recipes/" + id + "/details";
     }
 
+    //TODO add @PreAuthorize("isOwner(#id)")
     @GetMapping(value = "/recipes/{id}/details/edit")
     public String retrieveRecipeEditPage(@PathVariable(name = "id") Long id, Model model) {
         RecipeDetailsViewModel recipeDetailsViewModel = this.recipeService.getRecipeDetails(id);
@@ -128,6 +137,7 @@ public class RecipeController {
         return "recipe-edit";
     }
 
+    //TODO add @PreAuthorize("isOwner(#id)")
     @PatchMapping(value = "/recipes/{id}/details/edit")
     public String editRecipe(@PathVariable(name = "id") Long id,
                              @Valid RecipeEditBindingModel recipeEditBindingModel,
@@ -147,6 +157,7 @@ public class RecipeController {
         return "redirect:/recipes/" + id + "/details";
     }
 
+    //TODO add @PreAuthorize("isOwner(#id)")
     @DeleteMapping(value = "/recipes/{id}/details/delete")
     public String deleteRecipe(@PathVariable(name = "id") Long id) {
         this.recipeService.deleteRecipe(id);

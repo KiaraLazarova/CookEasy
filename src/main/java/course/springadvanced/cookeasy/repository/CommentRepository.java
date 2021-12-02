@@ -6,8 +6,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
     @Query(value = "SELECT COUNT(c) FROM CommentEntity AS c WHERE c.recipeEntity.id = :recipeId AND c.approved = TRUE")
     long findAllByRecipeEntityCount(@Param(value = "recipeId") Long id);
+
+    @Query(value = "SELECT c FROM CommentEntity AS c WHERE c.recipeEntity.id = :recipeId AND c.approved = TRUE")
+    List<CommentEntity> findAllByRecipeEntityAndApprovedTrue(@Param(value = "recipeId") Long recipeId);
+
+    @Query(value = "SELECT c FROM CommentEntity AS c WHERE c.recipeEntity.id = :recipeId")
+    List<CommentEntity> findAllByRecipeEntity(@Param(value = "recipeId") Long recipeId);
+
+    @Query(value = "SELECT c FROM CommentEntity AS c WHERE c.author.id = :authorId")
+    List<CommentEntity> findAllByAuthorEntity(@Param(value = "authorId") Long authorId);
 }

@@ -8,6 +8,7 @@ import course.springadvanced.cookeasy.model.view.RecipeDetailsViewModel;
 import java.util.List;
 
 public interface RecipeService {
+    void initializeRecipes();
     void addRecipe(String username, RecipeAddServiceModel recipeAddServiceModel);
     boolean isTitleOccupied(String title);
     List<RecipeBriefDescriptionViewModel> getRecipesBriefDescriptions(String username);
