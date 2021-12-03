@@ -24,4 +24,5 @@ public interface RecipeService {
     void deleteRecipe(Long id);
     String getRecipeTitle(Long id);
     String getRecipeAuthorUsername(Long id);
+    long getRecipeCount();
 }

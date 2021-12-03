@@ -41,6 +41,8 @@ public class RecipeServiceImpl implements RecipeService {
     public void initializeRecipes() {
         if(this.recipeRepository.count() != 0) return;
 
+        if(this.userService.getUserCount() != 3) return;
+
         /* Full set up of beginner recipe entity */
         RecipeEntity beginnerRecipe = new RecipeEntity();
 
@@ -339,6 +341,11 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public String getRecipeAuthorUsername(Long id) {
         return this.findRecipeById(id).getAuthor().getUsername();
+    }
+
+    @Override
+    public long getRecipeCount() {
+        return this.recipeRepository.count();
     }
 
     private RecipeBriefDescriptionViewModel mapToRecipeBriefDescriptionViewModel(RecipeEntity recipe) {

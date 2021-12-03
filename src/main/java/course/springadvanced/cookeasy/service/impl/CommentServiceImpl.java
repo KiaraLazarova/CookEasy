@@ -36,6 +36,10 @@ public class CommentServiceImpl implements CommentService {
     public void initializeComments() {
         if(this.commentRepository.count() != 0) return;
 
+        if(this.recipeService.getRecipeCount() != 3) return;
+
+        if(this.userService.getUserCount() != 3) return;
+
         /* Initialize comment about beginner recipe entity posted by @ivan_lazarov */
         String beginnerRecipeCommentContent = """
                 My recipe is AMAZING &#127851;!!!

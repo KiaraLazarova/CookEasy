@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,10 +34,10 @@ public class CookEasyUserServiceImpl implements UserDetailsService {
     }
 
     private UserDetails mapToUserDetails(UserEntity user) {
-        Set<GrantedAuthority> grantedAuthorities = user.getRoles()
+        List<GrantedAuthority> grantedAuthorities = user.getRoles()
                 .stream()
                 .map(role -> new SimpleGrantedAuthority(String.format("ROLE_%s", role.getRoleNameEnum().name())))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
 
         return new CookEasyUser(
                 user.getUsername(),

@@ -6,6 +6,7 @@ import course.springadvanced.cookeasy.model.entity.enumeration.LevelNameEnum;
 import course.springadvanced.cookeasy.model.entity.enumeration.RoleNameEnum;
 import course.springadvanced.cookeasy.model.service.UserProfileEditServiceModel;
 import course.springadvanced.cookeasy.model.service.UserRegisterServiceModel;
+import course.springadvanced.cookeasy.model.view.UserAdminPanelViewModel;
 import course.springadvanced.cookeasy.model.view.UserProfileDetailsViewModel;
 import course.springadvanced.cookeasy.repository.UserRepository;
 import course.springadvanced.cookeasy.service.*;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -128,21 +130,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserProfile(Long id) {
-        UserEntity user = this.findUserById(id);
-
-        user.getLikedRecipes().forEach(r -> r.setLikes(r.getLikes() - 1));
-        user.getSavedRecipes().forEach(r -> r.setSaves(r.getSaves() - 1));
-        user.getCookedRecipes().forEach(r -> r.setCooks(r.getCooks() - 1));
-
-        user.setLikedRecipes(null);
-        user.setSavedRecipes(null);
-        user.setCookedRecipes(null);
-
-        List<CommentEntity> comments = this.commentService.findAllCommentsByAuthorId(id);
-
-        comments.forEach(c -> this.commentService.deleteComment(c.getId()));
-
-        this.userRepository.delete(user);
+        this.deleteUser(id);
 
         SecurityContextHolder.getContext().setAuthentication(null);
     }
@@ -161,6 +149,34 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserEntity> findAllUsers() {
         return this.userRepository.findAll();
+    }
+
+    @Override
+    public long getUserCount() {
+        return this.userRepository.count();
+    }
+
+    @Override
+    public List<UserAdminPanelViewModel> getUserAdminPanel() {
+        return this.userRepository.findAll()
+                .stream()
+                .map(this::mapToUserAdminPanelViewModel)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void makeUserAdmin(Long id) {
+        UserEntity user = this.findUserById(id);
+
+        RoleEntity adminRole = this.roleService.findRoleByRoleName(RoleNameEnum.ADMIN);
+        user.getRoles().add(adminRole);
+
+        this.updateUserDetailsObject(user);
+    }
+
+    @Override
+    public void deleteUserAdminPanel(Long id) {
+        this.deleteUser(id);
     }
 
     private UserEntity initializeUser(String username, String firstName, String lastName, String email, String password,
@@ -219,10 +235,43 @@ public class UserServiceImpl implements UserService {
         this.userRepository.saveAndFlush(user);
 
         /* Update spring user details object */
+        this.updateUserDetailsObject(user);
+    }
+
+    private void updateUserDetailsObject(UserEntity user) {
         UserDetails principal = this.cookEasyUserService.loadUserByUsername(user.getUsername());
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(principal, user.getPassword(), principal.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    private UserAdminPanelViewModel mapToUserAdminPanelViewModel(UserEntity user) {
+        UserAdminPanelViewModel userAdminPanelViewModel = this.modelMapper.map(user, UserAdminPanelViewModel.class);
+
+        userAdminPanelViewModel.setFullName(user.getFirstName() + " " + user.getLastName());
+
+        RoleEntity adminRole = this.roleService.findRoleByRoleName(RoleNameEnum.ADMIN);
+        userAdminPanelViewModel.setAdmin(user.getRoles().contains(adminRole));
+
+        return userAdminPanelViewModel;
+    }
+
+    private void deleteUser(Long id) {
+        UserEntity user = this.findUserById(id);
+
+        user.getLikedRecipes().forEach(r -> r.setLikes(r.getLikes() - 1));
+        user.getSavedRecipes().forEach(r -> r.setSaves(r.getSaves() - 1));
+        user.getCookedRecipes().forEach(r -> r.setCooks(r.getCooks() - 1));
+
+        user.setLikedRecipes(null);
+        user.setSavedRecipes(null);
+        user.setCookedRecipes(null);
+
+        List<CommentEntity> comments = this.commentService.findAllCommentsByAuthorId(id);
+
+        comments.forEach(c -> this.commentService.deleteComment(c.getId()));
+
+        this.userRepository.delete(user);
     }
 }

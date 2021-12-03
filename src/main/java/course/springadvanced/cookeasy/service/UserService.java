@@ -3,6 +3,7 @@ package course.springadvanced.cookeasy.service;
 import course.springadvanced.cookeasy.model.entity.UserEntity;
 import course.springadvanced.cookeasy.model.service.UserProfileEditServiceModel;
 import course.springadvanced.cookeasy.model.service.UserRegisterServiceModel;
+import course.springadvanced.cookeasy.model.view.UserAdminPanelViewModel;
 import course.springadvanced.cookeasy.model.view.UserProfileDetailsViewModel;
 import java.util.List;
 
@@ -17,4 +18,8 @@ public interface UserService {
     UserEntity findUserByUsername(String username);
     void saveAndFlushUser(UserEntity user);
     List<UserEntity> findAllUsers();
+    long getUserCount();
+    List<UserAdminPanelViewModel> getUserAdminPanel();
+    void makeUserAdmin(Long id);
+    void deleteUserAdminPanel(Long id);
 }
