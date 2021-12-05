@@ -11,6 +11,7 @@ public class CommentEntity extends BaseEntity {
     private String content;
     private UserEntity author;
     private RecipeEntity recipeEntity;
+    private boolean archived;
 
     public CommentEntity() {
     }
@@ -61,5 +62,14 @@ public class CommentEntity extends BaseEntity {
 
     public void setRecipeEntity(RecipeEntity recipeEntity) {
         this.recipeEntity = recipeEntity;
+    }
+
+    @Column(name = "archived", nullable = false)
+    public boolean isArchived() {
+        return this.archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 }

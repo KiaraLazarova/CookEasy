@@ -20,9 +20,9 @@
             <div class="text-white text-center">
               <br>
               <br>
-              <h1 class="mb-3">Edit users</h1>
-              <h5 class="mb-4">You want to approve or archive comments? No problem - just click the button below.</h5>
-              <a class="btn btn-outline-light btn-lg m-2" th:href="@{/comments}" role="button">Edit comments</a>
+              <h1 class="mb-3">Edit comments</h1>
+              <h5 class="mb-4">You want to update user roles or delete users? No problem - just click the button below.</h5>
+              <a class="btn btn-outline-light btn-lg m-2" th:href="@{/users}" role="button">Edit users</a>
             </div>
           </div>
         </div>
@@ -36,33 +36,37 @@
       <div class="container">
         <!--Section: Content-->
         <section class="text-center">
+            <h5 class="text-center text-warning">
+                <strong><u>IMPORTANT:</u></strong>
+                Archived comments are automatically deleted on every 24 hours.
+            </h5>
+            <br>
+            <br>
             <table class="table table-bordered border-dark table-striped align-middle">
                 <thead>
                 <tr>
-                    <th scope="col">USERNAME</th>
-                    <th scope="col">EMAIL</th>
-                    <th scope="col">FULL NAME</th>
-                    <th scope="col">GENDER</th>
-                    <th scope="col">LEVEL</th>
+                    <th scope="col" style="white-space: nowrap; overflow: hidden;">AUTHOR USERNAME</th>
+                    <th scope="col" style="white-space: nowrap; overflow: hidden;">RECIPE TITLE</th>
+                    <th scope="col" style="white-space: nowrap; overflow: hidden;">CREATED ON</th>
+                    <th scope="col">CONTENT</th>
                     <th scope="col"></th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="viewModel : ${viewModels}" th:object="${viewModel}">
-                    <th scope="row">@<th:block th:text="*{username}"></th:block></th>
-                    <td th:text="*{email}"></td>
-                    <td th:text="*{fullName}"></td>
-                    <td th:text="*{#strings.toLowerCase(genderEntity.genderNameEnum.name())}"></td>
-                    <td th:text="*{#strings.toLowerCase(levelEntity.levelNameEnum.name())}"></td>
+                    <th scope="row">@<th:block th:text="*{authorUsername}"></th:block></th>
+                    <td th:text="*{recipeTitle}"></td>
+                    <td style="white-space: nowrap; overflow: hidden;" th:text="*{createdOn}"></td>
+                    <td class="custom-text-justify" th:text="*{content}" style="font-weight: normal"></td>
                     <td>
-                        <form th:action="@{/users/{id}/make-admin(id=*{id})}" th:method="patch">
-                            <input th:attr="disabled=*{admin} ? 'disabled' : null" type="submit" class="btn btn-success btn-md px-3" value="Make admin"/>
+                        <form th:action="@{/comments/{id}/approve(id=*{id})}" th:method="patch">
+                            <input th:attr="disabled=*{approved} ? 'disabled' : null" type="submit" class="btn btn-success btn-md px-3" value="Approve"/>
                         </form>
                     </td>
                     <td>
-                        <form th:action="@{/users/{id}/delete(id=*{id})}" th:method="delete">
-                            <input th:attr="disabled=*{id == #authentication.principal.id} ? 'disabled' : null" type="submit" class="btn btn-danger btn-md px-3" value="Delete"/>
+                        <form th:action="@{/comments/{id}/archive(id=*{id})}" th:method="patch">
+                            <input th:attr="disabled=*{archived} ? 'disabled' : null" type="submit" class="btn btn-danger btn-md px-3" value="Archive"/>
                         </form>
                     </td>
                 </tr>

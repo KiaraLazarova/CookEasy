@@ -4,6 +4,7 @@ import course.springadvanced.cookeasy.model.entity.CommentEntity;
 import course.springadvanced.cookeasy.model.entity.RecipeEntity;
 import course.springadvanced.cookeasy.model.entity.UserEntity;
 import course.springadvanced.cookeasy.model.service.CommentPostServiceModel;
+import course.springadvanced.cookeasy.model.view.CommentAdminPanelViewModel;
 import course.springadvanced.cookeasy.model.view.CommentDisplayViewModel;
 import course.springadvanced.cookeasy.repository.CommentRepository;
 import course.springadvanced.cookeasy.service.CommentService;
@@ -124,17 +125,36 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void postComment(String username, Long recipeId, CommentPostServiceModel commentPostServiceModel) {
-        CommentEntity comment = this.modelMapper.map(commentPostServiceModel, CommentEntity.class);
+        this.initializeComment(
+                false,
+                commentPostServiceModel.getContent(),
+                recipeId,
+                username
+        );
+    }
 
-        comment.setApproved(false);
+    @Override
+    public List<CommentAdminPanelViewModel> getCommentAdminPanel() {
+        return this.commentRepository.findAll()
+                .stream()
+                .map(this::mapToCommentAdminPanelViewModel)
+                .collect(Collectors.toList());
+    }
 
-        comment.setCreatedOn(LocalDateTime.now());
+    @Override
+    public void approveComment(Long id) {
+        CommentEntity comment = this.findCommentById(id);
 
-        RecipeEntity recipe = this.recipeService.findRecipeById(recipeId);
-        comment.setRecipeEntity(recipe);
+        comment.setApproved(true);
 
-        UserEntity author = this.userService.findUserByUsername(username);
-        comment.setAuthor(author);
+        this.commentRepository.saveAndFlush(comment);
+    }
+
+    @Override
+    public void archiveComment(Long id) {
+        CommentEntity comment = this.findCommentById(id);
+
+        comment.setArchived(true);
 
         this.commentRepository.saveAndFlush(comment);
     }
@@ -145,6 +165,8 @@ public class CommentServiceImpl implements CommentService {
         comment.setCreatedOn(LocalDateTime.now());
 
         comment.setApproved(isApproved);
+
+        comment.setArchived(false);
 
         comment.setContent(content);
 
@@ -167,5 +189,23 @@ public class CommentServiceImpl implements CommentService {
         commentDisplayViewModel.setAuthorGenderNameEnumName(comment.getAuthor().getGenderEntity().getGenderNameEnum().name().toLowerCase());
 
         return commentDisplayViewModel;
+    }
+
+    private CommentAdminPanelViewModel mapToCommentAdminPanelViewModel(CommentEntity comment) {
+        CommentAdminPanelViewModel commentAdminPanelViewModel =
+                this.modelMapper.map(comment, CommentAdminPanelViewModel.class);
+
+        commentAdminPanelViewModel.setAuthorUsername(comment.getAuthor().getUsername());
+
+        commentAdminPanelViewModel.setRecipeTitle(comment.getRecipeEntity().getTitle());
+
+        commentAdminPanelViewModel.setCreatedOn(comment.getCreatedOn().toLocalDate());
+
+        return commentAdminPanelViewModel;
+    }
+
+    private CommentEntity findCommentById(Long id) {
+        //TODO add error handling - object not found exception
+        return this.commentRepository.findById(id).get();
     }
 }

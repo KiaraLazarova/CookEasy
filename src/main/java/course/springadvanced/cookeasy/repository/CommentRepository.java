@@ -10,10 +10,10 @@ import java.util.List;
 
 @Repository
 public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
-    @Query(value = "SELECT COUNT(c) FROM CommentEntity AS c WHERE c.recipeEntity.id = :recipeId AND c.approved = TRUE")
+    @Query(value = "SELECT COUNT(c) FROM CommentEntity AS c WHERE c.recipeEntity.id = :recipeId AND c.approved = TRUE AND c.archived = FALSE")
     long findAllByRecipeEntityCount(@Param(value = "recipeId") Long id);
 
-    @Query(value = "SELECT c FROM CommentEntity AS c WHERE c.recipeEntity.id = :recipeId AND c.approved = TRUE")
+    @Query(value = "SELECT c FROM CommentEntity AS c WHERE c.recipeEntity.id = :recipeId AND c.approved = TRUE AND c.archived = FALSE")
     List<CommentEntity> findAllByRecipeEntityAndApprovedTrue(@Param(value = "recipeId") Long recipeId);
 
     @Query(value = "SELECT c FROM CommentEntity AS c WHERE c.recipeEntity.id = :recipeId")

@@ -10,7 +10,7 @@ public class UserAdminPanelViewModel {
     private String fullName;
     private GenderEntity genderEntity;
     private LevelEntity levelEntity;
-    private boolean isAdmin;
+    private boolean admin;
 
     public UserAdminPanelViewModel() {
     }
@@ -64,10 +64,10 @@ public class UserAdminPanelViewModel {
     }
 
     public boolean isAdmin() {
-        return this.isAdmin;
+        return this.admin;
     }
 
     public void setAdmin(boolean admin) {
-        isAdmin = admin;
+        this.admin = admin;
     }
 }
