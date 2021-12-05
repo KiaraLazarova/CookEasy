@@ -159,6 +159,13 @@ public class CommentServiceImpl implements CommentService {
         this.commentRepository.saveAndFlush(comment);
     }
 
+    @Override
+    public void deleteArchivedComments() {
+        List<CommentEntity> archivedComments = this.commentRepository.findAllByArchivedTrue();
+
+        archivedComments.forEach(c -> this.deleteComment(c.getId()));
+    }
+
     private void initializeComment(boolean isApproved, String content, Long recipeId, String username) {
         CommentEntity comment = new CommentEntity();
 

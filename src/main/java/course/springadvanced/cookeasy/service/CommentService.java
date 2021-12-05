@@ -18,4 +18,5 @@ public interface CommentService {
     List<CommentAdminPanelViewModel> getCommentAdminPanel();
     void approveComment(Long id);
     void archiveComment(Long id);
+    void deleteArchivedComments();
 }

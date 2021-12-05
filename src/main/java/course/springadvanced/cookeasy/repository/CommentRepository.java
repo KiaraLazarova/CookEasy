@@ -21,4 +21,6 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
 
     @Query(value = "SELECT c FROM CommentEntity AS c WHERE c.author.id = :authorId")
     List<CommentEntity> findAllByAuthorEntity(@Param(value = "authorId") Long authorId);
+
+    List<CommentEntity> findAllByArchivedTrue();
 }
