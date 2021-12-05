@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head">
+</head>
+
+<body>
+  <!--Main Navigation-->
+  <header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" th:replace="fragments/navbar :: navbar">
+    </nav>
+    <!-- Navbar -->
+
+    <!-- Background image -->
+    <div id="intro" class="shadow-2-strong">
+      <div class="mask d-flex align-items-center h-100">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-12 col-xl-4">
+              <div class="card p-4" style="border-radius: 5px;">
+                <div class="card-body text-center">
+                  <h2 style="color: #f58b8d;"><u>QUOTE:</u></h2>
+                  <h3 class="mb-3">
+                    <th:block th:text="#{quote}"></th:block>
+                    &#10024;
+                  </h3>
+                </div>
+              </div>
+              <br>
+              <br>
+              <form th:method="get" class="bg-white rounded shadow-5-strong p-4">
+                <label th:text="#{language}" for="lang" class="fw-bold"></label>
+                <br>
+                <select onchange="this.form.submit()" id="lang" name="lang" class="browser-default custom-select form-select">
+                  <option value="en_US" th:selected="${#locale.toString()} == 'en_US'">English</option>
+                  <option value="fr_FR" th:selected="${#locale.toString()} == 'fr_FR'">Français</option>
+                  <option value="de_DE" th:selected="${#locale.toString()} == 'de_DE'">Deutsch</option>
+                </select>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Background image -->
+  </header>
+  <!--Main Navigation-->
+
+  <!--Footer-->
+  <footer class="bg-light text-lg-start" th:replace="fragments/footer :: footer">
+  </footer>
+  <!--Footer-->
+
+    <!-- MDB script -->
+    <script type="text/javascript" src="/js/mdb.min.js"></script>
+</body>
+
+</html>
