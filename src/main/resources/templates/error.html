@@ -1,0 +1,49 @@
+<!doctype html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head">
+</head>
+
+<body>
+<!--Main Navigation-->
+<header>
+    <div class="error-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <div class="error-text">
+                        <h1 class="error text-center"><strong>ERROR</strong></h1>
+                        <h1 class="error text-center text-danger"><strong>? ? ?</strong></h1>
+                        <div class="im-sheep">
+                            <div class="top">
+                                <div class="body"></div>
+                                <div class="head">
+                                    <div class="im-eye one"></div>
+                                    <div class="im-eye two"></div>
+                                    <div class="im-ear one"></div>
+                                    <div class="im-ear two"></div>
+                                </div>
+                            </div>
+                            <div class="im-legs">
+                                <div class="im-leg"></div>
+                                <div class="im-leg"></div>
+                                <div class="im-leg"></div>
+                                <div class="im-leg"></div>
+                            </div>
+                        </div>
+                        <h4 class="text-center">Oops! An <u>UNEXPECTED</u> error occurred!</h4>
+                        <p class="text-center">We apologise for the inconvenience.</p>
+                        <a th:href="@{/}" class="btn btn-danger btn-lg">GO TO HOMEPAGE</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- MDB script -->
+<script type="text/javascript" src="/js/mdb.min.js"></script>
+</body>
+
+</html>
