@@ -79,10 +79,9 @@ public class RecipeController {
         return "redirect:/recipes";
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("@recipeServiceImpl.canViewRecipe(#principal.name, #id)")
     @GetMapping(value = "/recipes/{id}/details")
     public String retrieveRecipeDetailsPage(@PathVariable(name = "id") Long id, Model model, Principal principal) {
-        //TODO check if current user level corresponds to current recipe level => - (return "redirect:/recipes")
         RecipeDetailsViewModel recipeDetailsViewModel = this.recipeService.getRecipeDetails(id);
 
         model.addAttribute("viewModel", recipeDetailsViewModel);

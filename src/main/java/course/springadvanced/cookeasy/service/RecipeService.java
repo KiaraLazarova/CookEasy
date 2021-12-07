@@ -26,4 +26,5 @@ public interface RecipeService {
     String getRecipeAuthorUsername(Long id);
     long getRecipeCount();
     boolean isRecipeOwner(String callerUsername, Long recipeId);
+    boolean canViewRecipe(String callerUsername, Long recipeId);
 }

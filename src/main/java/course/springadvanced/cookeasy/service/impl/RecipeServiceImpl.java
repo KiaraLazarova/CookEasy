@@ -360,6 +360,16 @@ public class RecipeServiceImpl implements RecipeService {
         return caller.get().getId().equals(recipe.get().getAuthor().getId());
     }
 
+    @Override
+    public boolean canViewRecipe(String callerUsername, Long recipeId) {
+        Optional<UserEntity> caller = this.userService.findOptionalUserByUsername(callerUsername);
+        Optional<RecipeEntity> recipe = this.recipeRepository.findById(recipeId);
+
+        if(caller.isEmpty() || recipe.isEmpty()) return false;
+
+        return caller.get().getLevelEntity().getId().equals(recipe.get().getLevelEntity().getId());
+    }
+
     private RecipeBriefDescriptionViewModel mapToRecipeBriefDescriptionViewModel(RecipeEntity recipe) {
         RecipeBriefDescriptionViewModel recipeBriefDescriptionViewModel =
                 this.modelMapper.map(recipe, RecipeBriefDescriptionViewModel.class);
