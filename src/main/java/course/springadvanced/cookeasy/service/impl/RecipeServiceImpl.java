@@ -9,6 +9,7 @@ import course.springadvanced.cookeasy.model.view.RecipeBriefDescriptionViewModel
 import course.springadvanced.cookeasy.model.view.RecipeDetailsViewModel;
 import course.springadvanced.cookeasy.repository.RecipeRepository;
 import course.springadvanced.cookeasy.service.*;
+import course.springadvanced.cookeasy.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -269,8 +270,8 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public RecipeEntity findRecipeById(Long id) {
-        //TODO add error handling - object ot found exception
-        return this.recipeRepository.findById(id).get();
+        return this.recipeRepository.findById(id).
+                orElseThrow(() -> new ObjectNotFoundException("Recipe with id " + id + " not found!"));
     }
 
     @Override

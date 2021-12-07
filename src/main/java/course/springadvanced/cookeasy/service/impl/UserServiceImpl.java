@@ -10,6 +10,7 @@ import course.springadvanced.cookeasy.model.view.UserAdminPanelViewModel;
 import course.springadvanced.cookeasy.model.view.UserProfileDetailsViewModel;
 import course.springadvanced.cookeasy.repository.UserRepository;
 import course.springadvanced.cookeasy.service.*;
+import course.springadvanced.cookeasy.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -137,8 +138,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity findUserByUsername(String username) {
-        //TODO add error handling - object not found exception
-        return this.userRepository.findByUsername(username).get();
+        return this.userRepository.findByUsername(username).
+                orElseThrow(() -> new ObjectNotFoundException("User with username @" + username + " not found!"));
     }
 
     @Override
@@ -216,8 +217,8 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserEntity findUserById(Long id) {
-        //TODO add error handling - object not found exception
-        return this.userRepository.findById(id).get();
+        return this.userRepository.findById(id).
+                orElseThrow(() -> new ObjectNotFoundException("User with id " + id + " not found!"));
     }
 
     private UserProfileDetailsViewModel mapToUserProfileDetailsViewModel(UserEntity user) {

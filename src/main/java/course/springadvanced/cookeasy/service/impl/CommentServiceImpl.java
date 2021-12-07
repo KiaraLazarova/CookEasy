@@ -10,6 +10,7 @@ import course.springadvanced.cookeasy.repository.CommentRepository;
 import course.springadvanced.cookeasy.service.CommentService;
 import course.springadvanced.cookeasy.service.RecipeService;
 import course.springadvanced.cookeasy.service.UserService;
+import course.springadvanced.cookeasy.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -212,7 +213,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     private CommentEntity findCommentById(Long id) {
-        //TODO add error handling - object not found exception
-        return this.commentRepository.findById(id).get();
+        return this.commentRepository.findById(id).
+                orElseThrow(() -> new ObjectNotFoundException("Comment with id " + id + " not found!"));
     }
 }
