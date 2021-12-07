@@ -6,12 +6,14 @@ import course.springadvanced.cookeasy.model.view.UserProfileDetailsViewModel;
 import course.springadvanced.cookeasy.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class UserProfileController {
@@ -24,9 +26,9 @@ public class UserProfileController {
         this.modelMapper = modelMapper;
     }
 
-    //TODO add @PreAuthorize("isOwner(#id)")
+    @PreAuthorize("@userServiceImpl.isProfileOwner(#principal.name, #id)")
     @GetMapping(value = "/users/{id}/profile")
-    public String retrieveProfilePage(@PathVariable(name = "id") Long id, Model model) {
+    public String retrieveProfilePage(@PathVariable(name = "id") Long id, Model model, Principal principal) {
         UserProfileDetailsViewModel userProfileDetailsViewModel = this.userService.getUserProfileDetails(id);
 
         model.addAttribute("viewModel", userProfileDetailsViewModel);
@@ -34,9 +36,9 @@ public class UserProfileController {
         return "profile";
     }
 
-    //TODO add @PreAuthorize("isOwner(#id)")
+    @PreAuthorize("@userServiceImpl.isProfileOwner(#principal.name, #id)")
     @GetMapping(value = "/users/{id}/profile/edit")
-    public String retrieveProfileEditPage(@PathVariable(name = "id") Long id, Model model) {
+    public String retrieveProfileEditPage(@PathVariable(name = "id") Long id, Model model, Principal principal) {
         UserProfileDetailsViewModel userProfileDetailsViewModel = this.userService.getUserProfileDetails(id);
         UserProfileEditBindingModel userProfileEditBindingModel = this.modelMapper.map(userProfileDetailsViewModel, UserProfileEditBindingModel.class);
 
@@ -45,12 +47,13 @@ public class UserProfileController {
         return "profile-edit";
     }
 
-    //TODO add @PreAuthorize("isOwner(#id)")
+    @PreAuthorize("@userServiceImpl.isProfileOwner(#principal.name, #id)")
     @PatchMapping(value = "/users/{id}/profile/edit")
     public String editUserProfile(@PathVariable(name = "id") Long id,
                                   @Valid UserProfileEditBindingModel userProfileEditBindingModel,
                                   BindingResult bindingResult,
-                                  RedirectAttributes redirectAttributes) {
+                                  RedirectAttributes redirectAttributes,
+                                  Principal principal) {
         if(bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("bindingModel", userProfileEditBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.bindingModel", bindingResult);
@@ -65,9 +68,9 @@ public class UserProfileController {
         return "redirect:/users/" + id + "/profile";
     }
 
-    //TODO add @PreAuthorize("isOwner(#id)")
+    @PreAuthorize("@userServiceImpl.isProfileOwner(#principal.name, #id)")
     @DeleteMapping(value = "/users/{id}/profile/delete")
-    public String deleteUserProfile(@PathVariable(name = "id") Long id) {
+    public String deleteUserProfile(@PathVariable(name = "id") Long id, Principal principal) {
         this.userService.deleteUserProfile(id);
 
         return "redirect:/";

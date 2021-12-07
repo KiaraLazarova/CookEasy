@@ -22,4 +22,5 @@ public interface UserService {
     List<UserAdminPanelViewModel> getUserAdminPanel();
     void makeUserAdmin(Long id);
     void deleteUserAdminPanel(Long id);
+    boolean isProfileOwner(String callerUsername, Long ownerId);
 }

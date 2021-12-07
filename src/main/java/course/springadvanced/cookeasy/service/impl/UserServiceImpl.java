@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -178,6 +179,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserAdminPanel(Long id) {
         this.deleteUser(id);
+    }
+
+    @Override
+    public boolean isProfileOwner(String callerUsername, Long ownerId) {
+        Optional<UserEntity> caller = this.userRepository.findByUsername(callerUsername);
+        Optional<UserEntity> owner = this.userRepository.findById(ownerId);
+
+        if(caller.isEmpty() || owner.isEmpty()) return false;
+
+        return caller.get().getId().equals(ownerId);
     }
 
     private UserEntity initializeUser(String username, String firstName, String lastName, String email, String password,
