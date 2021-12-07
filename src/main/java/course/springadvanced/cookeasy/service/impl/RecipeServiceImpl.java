@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -347,6 +348,16 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public long getRecipeCount() {
         return this.recipeRepository.count();
+    }
+
+    @Override
+    public boolean isRecipeOwner(String callerUsername, Long recipeId) {
+        Optional<UserEntity> caller = this.userService.findOptionalUserByUsername(callerUsername);
+        Optional<RecipeEntity> recipe = this.recipeRepository.findById(recipeId);
+
+        if(caller.isEmpty() || recipe.isEmpty()) return false;
+
+        return caller.get().getId().equals(recipe.get().getAuthor().getId());
     }
 
     private RecipeBriefDescriptionViewModel mapToRecipeBriefDescriptionViewModel(RecipeEntity recipe) {

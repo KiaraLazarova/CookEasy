@@ -126,9 +126,9 @@ public class RecipeController {
         return "redirect:/recipes/" + id + "/details";
     }
 
-    //TODO add @PreAuthorize("isOwner(#id)")
+    @PreAuthorize("@recipeServiceImpl.isRecipeOwner(#principal.name, #id)")
     @GetMapping(value = "/recipes/{id}/details/edit")
-    public String retrieveRecipeEditPage(@PathVariable(name = "id") Long id, Model model) {
+    public String retrieveRecipeEditPage(@PathVariable(name = "id") Long id, Model model, Principal principal) {
         RecipeDetailsViewModel recipeDetailsViewModel = this.recipeService.getRecipeDetails(id);
         RecipeEditBindingModel recipeEditBindingModel = this.modelMapper.map(recipeDetailsViewModel, RecipeEditBindingModel.class);
 
@@ -137,7 +137,7 @@ public class RecipeController {
         return "recipe-edit";
     }
 
-    //TODO add @PreAuthorize("isOwner(#id)")
+    @PreAuthorize("@recipeServiceImpl.isRecipeOwner(#principal.name, #id)")
     @PatchMapping(value = "/recipes/{id}/details/edit")
     public String editRecipe(@PathVariable(name = "id") Long id,
                              @Valid RecipeEditBindingModel recipeEditBindingModel,
@@ -157,7 +157,7 @@ public class RecipeController {
         return "redirect:/recipes/" + id + "/details";
     }
 
-    //TODO add @PreAuthorize("isOwner(#id)")
+    @PreAuthorize("@recipeServiceImpl.isRecipeOwner(#principal.name, #id)")
     @DeleteMapping(value = "/recipes/{id}/details/delete")
     public String deleteRecipe(@PathVariable(name = "id") Long id) {
         this.recipeService.deleteRecipe(id);

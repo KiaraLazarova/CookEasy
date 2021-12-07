@@ -139,7 +139,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity findUserByUsername(String username) {
-        return this.userRepository.findByUsername(username).
+        return this.findOptionalUserByUsername(username).
                 orElseThrow(() -> new ObjectNotFoundException("User with username @" + username + " not found!"));
     }
 
@@ -189,6 +189,11 @@ public class UserServiceImpl implements UserService {
         if(caller.isEmpty() || owner.isEmpty()) return false;
 
         return caller.get().getId().equals(ownerId);
+    }
+
+    @Override
+    public Optional<UserEntity> findOptionalUserByUsername(String username) {
+        return this.userRepository.findByUsername(username);
     }
 
     private UserEntity initializeUser(String username, String firstName, String lastName, String email, String password,

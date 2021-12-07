@@ -6,6 +6,7 @@ import course.springadvanced.cookeasy.model.service.UserRegisterServiceModel;
 import course.springadvanced.cookeasy.model.view.UserAdminPanelViewModel;
 import course.springadvanced.cookeasy.model.view.UserProfileDetailsViewModel;
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
     void initializeUsers();
@@ -23,4 +24,5 @@ public interface UserService {
     void makeUserAdmin(Long id);
     void deleteUserAdminPanel(Long id);
     boolean isProfileOwner(String callerUsername, Long ownerId);
+    Optional<UserEntity> findOptionalUserByUsername(String username);
 }
