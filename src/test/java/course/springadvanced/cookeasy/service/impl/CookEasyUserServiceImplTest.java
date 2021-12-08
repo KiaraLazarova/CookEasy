@@ -64,7 +64,7 @@ public class CookEasyUserServiceImplTest {
     }
 
     @Test
-    public void testLoadUserByUsernameThrowUsernameNotFoundEx() {
+    public void testLoadUserByUsernameShouldThrowUsernameNotFoundEx() {
         Assertions.assertThrows(
                 UsernameNotFoundException.class,
                 () -> this.cookEasyUserService.loadUserByUsername(GlobalTestConstants.INVALID_USERNAME)
@@ -72,7 +72,7 @@ public class CookEasyUserServiceImplTest {
     }
 
     @Test
-    public void testLoadUserByUsernameReturnUserDetailsObj() {
+    public void testLoadUserByUsernameShouldReturnUserDetailsObj() {
         Mockito
                 .when(this.userRepository.findByUsername(this.user.getUsername()))
                 .thenReturn(Optional.of(this.user));
