@@ -2,9 +2,7 @@ package course.springadvanced.cookeasy.web;
 
 import course.springadvanced.cookeasy.constant.GlobalTestConstants;
 import course.springadvanced.cookeasy.model.entity.UserEntity;
-import course.springadvanced.cookeasy.repository.RoleRepository;
 import course.springadvanced.cookeasy.repository.UserRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
