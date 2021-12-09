@@ -47,4 +47,6 @@ public class GlobalTestConstants {
     public static final boolean COMMENT_ARCHIVED = false;
 
     public static final boolean COMMENT_APPROVED = true;
+
+    public static final String COMMENT_POST_PAGE_VIEW_NAME = "comment-post";
 }
