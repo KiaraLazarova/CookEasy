@@ -55,4 +55,12 @@ public class GlobalTestConstants {
     public static final String USERS_PAGE_VIEW_NAME = "users-admin";
 
     public static final String COMMENTS_PAGE_VIEW_NAME = "comments-admin";
+
+    public static final String USER_PROFILE_PAGE_VIEW_NAME = "profile";
+
+    public static final String USER_PROFILE_EDIT_PAGE_VIEW_NAME = "profile-edit";
+
+    public static final String UPDATED_LAST_NAME = "updated";
+
+    public static final String INVALID_LAST_NAME = "invalid_last_name";
 }
