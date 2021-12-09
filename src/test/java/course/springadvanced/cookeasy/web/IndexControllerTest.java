@@ -90,6 +90,6 @@ public class IndexControllerTest {
     public void testRetrieveIndexPageShouldRedirect() throws Exception {
         this.mockMvc.
                 perform(get("/")).
-                andExpect(status().is(302));
+                andExpect(status().is3xxRedirection());
     }
 }

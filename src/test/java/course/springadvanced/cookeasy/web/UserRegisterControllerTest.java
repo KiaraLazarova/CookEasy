@@ -105,7 +105,7 @@ public class UserRegisterControllerTest {
                         with(csrf()).
                         contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 ).
-                andExpect(status().is(302));
+                andExpect(status().is3xxRedirection());
 
         Optional<UserEntity> user = this.userRepository.findByUsername(GlobalTestConstants.USERNAME);
         user.ifPresent(this.userRepository::delete);
