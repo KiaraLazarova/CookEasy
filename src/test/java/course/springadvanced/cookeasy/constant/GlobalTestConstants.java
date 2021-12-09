@@ -53,4 +53,6 @@ public class GlobalTestConstants {
     public static final String STATISTICS_PAGE_VIEW_NAME = "statistics-admin";
 
     public static final String USERS_PAGE_VIEW_NAME = "users-admin";
+
+    public static final String COMMENTS_PAGE_VIEW_NAME = "comments-admin";
 }
