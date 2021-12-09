@@ -27,4 +27,6 @@ public class GlobalTestConstants {
     public static final String INDEX_PAGE_VIEW_NAME = "index";
 
     public static final String QUOTES_PAGE_VIEW_NAME = "quotes";
+
+    public static final String LOGIN_PAGE_VIEW_NAME = "auth-login";
 }
