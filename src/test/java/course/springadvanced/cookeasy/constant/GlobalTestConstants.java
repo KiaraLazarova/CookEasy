@@ -63,4 +63,8 @@ public class GlobalTestConstants {
     public static final String UPDATED_LAST_NAME = "updated";
 
     public static final String INVALID_LAST_NAME = "invalid_last_name";
+
+    public static final String RECIPES_PAGE_VIEW_NAME = "recipes";
+
+    public static final String RECIPE_ADD_PAGE_VIEW_NAME = "recipe-add";
 }
