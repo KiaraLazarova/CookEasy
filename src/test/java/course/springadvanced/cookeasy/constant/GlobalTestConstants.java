@@ -25,4 +25,6 @@ public class GlobalTestConstants {
     public static final String LEVEL_NAME_ENUM = LevelNameEnum.ADVANCED.name();
 
     public static final String INDEX_PAGE_VIEW_NAME = "index";
+
+    public static final String QUOTES_PAGE_VIEW_NAME = "quotes";
 }
