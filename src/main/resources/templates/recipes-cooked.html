@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head">
+</head>
+
+<body>
+        <!--Main Navigation-->
+    <header>
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" th:replace="fragments/navbar :: navbar">
+      </nav>
+      <!-- Navbar -->
+
+      <!-- Background image -->
+      <div id="introHalf" class="bg-image shadow-2-strong">
+        <div class="mask">
+          <div class="container d-flex justify-content-center align-items-center h-100">
+            <div class="text-white text-center">
+              <br>
+              <br>
+              <h1 class="mb-3">Your collection of cooked recipes</h1>
+              <h5 class="mb-4">You want to see your collection of added recipes? No problem - just click the button below.</h5>
+              <a class="btn btn-outline-light btn-lg m-2" th:href="@{/users/{id}/collections/added(id=${#authentication.principal.id})}" role="button">View added recipes</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Background image -->
+    </header>
+    <!--Main Navigation-->
+
+    <!--Main layout-->
+    <main class="mt-5">
+      <div class="container">
+        <!--Section: Content-->
+        <section class="text-center">
+          <!-- Recipe -->
+          <div th:each="viewModel : ${viewModels}" th:object="${viewModel}" class="row custom-row-outline mt-3">
+            <div class="col-md-4 mb-4">
+              <div class="bg-image hover-overlay shadow-1-strong rounded ripple" data-mdb-ripple-color="light">
+                <img src="https://mdbootstrap.com/img/new/standard/nature/002.jpg" class="img-fluid" />
+                <a href="#">
+                  <div class="mask"></div>
+                </a>
+              </div>
+            </div>
+
+            <div class="col-md-8 mb-4">
+              <h4><strong th:text="*{title}"></strong></h4>
+              <h6 class="text-muted text-decoration-underline"><strong>Category:</strong> <th:block th:text="*{categoryEntity.categoryNameEnum.name()}"></th:block></h6>
+              <h6 class="text-muted text-decoration-underline"><strong>Difficulty level:</strong> <th:block th:text="*{levelEntity.levelNameEnum.name()}"></th:block></h6>
+              <div class="d-inline-flex justify-content-start rounded-3 p-2 mb-2" style="background-color: #efefef;">
+                  <div class="px-3">
+                      <p class="small text-muted mb-1">Likes</p>
+                      <p class="mb-0" th:text="*{likes}"></p>
+                  </div>
+                  <div class="px-3">
+                      <p class="small text-muted mb-1">Saves</p>
+                      <p class="mb-0" th:text="*{saves}"></p>
+                  </div>
+                  <div class="px-3">
+                      <p class="small text-muted mb-1">Cooks</p>
+                      <p class="mb-0" th:text="*{cooks}"></p>
+                  </div>
+                  <div class="px-3">
+                      <p class="small text-muted mb-1">Comments</p>
+                      <p class="mb-0" th:text="*{comments}"></p>
+                  </div>
+              </div>
+              <br>
+              <p th:if="*{description.length() > 237}" class="custom-text-justify">
+                  <th:block th:text="*{#strings.substring(description, 0, 237).trim()}"></th:block>...
+              </p>
+              <p th:if="*{description.length() <= 237}" class="custom-text-justify" th:text="*{description.trim()}"></p>
+              <a type="button" class="btn custom-pink-btn" th:href="@{/recipes/{id}/details(id=*{id})}">Read more</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <!--Main layout-->
+
+    <br>
+    <br>
+    <hr class="m-0" />
+
+    <!--Footer-->
+    <footer class="bg-light text-lg-start" th:replace="fragments/footer :: footer">
+    </footer>
+    <!--Footer-->
+
+    <!-- MDB -->
+    <script type="text/javascript" src="/js/mdb.min.js"></script>
+</body>
+</html>

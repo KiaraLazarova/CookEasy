@@ -370,6 +370,50 @@ public class RecipeServiceImpl implements RecipeService {
         return caller.get().getLevelEntity().getId().equals(recipe.get().getLevelEntity().getId());
     }
 
+    @Override
+    public List<RecipeBriefDescriptionViewModel> getAddedRecipesBriefDescriptions(String username) {
+        UserEntity author = this.userService.findUserByUsername(username);
+        List<RecipeEntity> addedRecipes = author.getAddedRecipes();
+
+        return addedRecipes
+                .stream()
+                .map(this::mapToRecipeBriefDescriptionViewModel)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RecipeBriefDescriptionViewModel> getLikedRecipesBriefDescriptions(String username) {
+        UserEntity author = this.userService.findUserByUsername(username);
+        List<RecipeEntity> likedRecipes = author.getLikedRecipes();
+
+        return likedRecipes
+                .stream()
+                .map(this::mapToRecipeBriefDescriptionViewModel)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RecipeBriefDescriptionViewModel> getSavedRecipesBriefDescriptions(String username) {
+        UserEntity author = this.userService.findUserByUsername(username);
+        List<RecipeEntity> savedRecipes = author.getSavedRecipes();
+
+        return savedRecipes
+                .stream()
+                .map(this::mapToRecipeBriefDescriptionViewModel)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RecipeBriefDescriptionViewModel> getCookedRecipesBriefDescriptions(String username) {
+        UserEntity author = this.userService.findUserByUsername(username);
+        List<RecipeEntity> cookedRecipes = author.getCookedRecipes();
+
+        return cookedRecipes
+                .stream()
+                .map(this::mapToRecipeBriefDescriptionViewModel)
+                .collect(Collectors.toList());
+    }
+
     private RecipeBriefDescriptionViewModel mapToRecipeBriefDescriptionViewModel(RecipeEntity recipe) {
         RecipeBriefDescriptionViewModel recipeBriefDescriptionViewModel =
                 this.modelMapper.map(recipe, RecipeBriefDescriptionViewModel.class);

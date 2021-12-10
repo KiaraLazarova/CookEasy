@@ -36,10 +36,10 @@
                         View collections
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-user-plus"></i>&nbsp; Added recipes</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="far fa-thumbs-up"></i>&nbsp; Liked recipes</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="far fa-heart"></i>&nbsp; Saved recipes</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-utensils"></i>&nbsp; Cooked recipes</a></li>
+                        <li><a class="dropdown-item" th:href="@{/users/{id}/collections/added(id=${#authentication.principal.id})}"><i class="fas fa-user-plus"></i>&nbsp; Added recipes</a></li>
+                        <li><a class="dropdown-item" th:href="@{/users/{id}/collections/liked(id=${#authentication.principal.id})}"><i class="far fa-thumbs-up"></i>&nbsp; Liked recipes</a></li>
+                        <li><a class="dropdown-item" th:href="@{/users/{id}/collections/saved(id=${#authentication.principal.id})}"><i class="far fa-heart"></i>&nbsp; Saved recipes</a></li>
+                        <li><a class="dropdown-item" th:href="@{/users/{id}/collections/cooked(id=${#authentication.principal.id})}"><i class="fas fa-utensils"></i>&nbsp; Cooked recipes</a></li>
                     </ul>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">

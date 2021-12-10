@@ -27,4 +27,8 @@ public interface RecipeService {
     long getRecipeCount();
     boolean isRecipeOwner(String callerUsername, Long recipeId);
     boolean canViewRecipe(String callerUsername, Long recipeId);
+    List<RecipeBriefDescriptionViewModel> getAddedRecipesBriefDescriptions(String username);
+    List<RecipeBriefDescriptionViewModel> getLikedRecipesBriefDescriptions(String username);
+    List<RecipeBriefDescriptionViewModel> getSavedRecipesBriefDescriptions(String username);
+    List<RecipeBriefDescriptionViewModel> getCookedRecipesBriefDescriptions(String username);
 }
