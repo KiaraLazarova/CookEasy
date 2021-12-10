@@ -20,7 +20,7 @@ public class UserCollectionController {
         this.recipeService = recipeService;
     }
 
-    @PreAuthorize("@recipeServiceImpl.isRecipeOwner(#principal.name, #id)")
+    @PreAuthorize("@userServiceImpl.isProfileOwner(#principal.name, #id)")
     @GetMapping(value = "/users/{id}/collections/added")
     public String retrieveAddedRecipesPage(@PathVariable(name = "id") Long id, Model model, Principal principal) {
         List<RecipeBriefDescriptionViewModel> recipeBriefDescriptionViewModels =
@@ -31,7 +31,7 @@ public class UserCollectionController {
         return "recipes-added";
     }
 
-    @PreAuthorize("@recipeServiceImpl.isRecipeOwner(#principal.name, #id)")
+    @PreAuthorize("@userServiceImpl.isProfileOwner(#principal.name, #id)")
     @GetMapping(value = "/users/{id}/collections/liked")
     public String retrieveLikedRecipesPage(@PathVariable(name = "id") Long id, Model model, Principal principal) {
         List<RecipeBriefDescriptionViewModel> recipeBriefDescriptionViewModels =
@@ -42,7 +42,7 @@ public class UserCollectionController {
         return "recipes-liked";
     }
 
-    @PreAuthorize("@recipeServiceImpl.isRecipeOwner(#principal.name, #id)")
+    @PreAuthorize("@userServiceImpl.isProfileOwner(#principal.name, #id)")
     @GetMapping(value = "/users/{id}/collections/saved")
     public String retrieveSavedRecipesPage(@PathVariable(name = "id") Long id, Model model, Principal principal) {
         List<RecipeBriefDescriptionViewModel> recipeBriefDescriptionViewModels =
@@ -53,7 +53,7 @@ public class UserCollectionController {
         return "recipes-saved";
     }
 
-    @PreAuthorize("@recipeServiceImpl.isRecipeOwner(#principal.name, #id)")
+    @PreAuthorize("@userServiceImpl.isProfileOwner(#principal.name, #id)")
     @GetMapping(value = "/users/{id}/collections/cooked")
     public String retrieveCookedRecipesPage(@PathVariable(name = "id") Long id, Model model, Principal principal) {
         List<RecipeBriefDescriptionViewModel> recipeBriefDescriptionViewModels =

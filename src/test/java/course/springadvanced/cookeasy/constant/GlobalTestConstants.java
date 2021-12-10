@@ -67,4 +67,12 @@ public class GlobalTestConstants {
     public static final String RECIPES_PAGE_VIEW_NAME = "recipes";
 
     public static final String RECIPE_ADD_PAGE_VIEW_NAME = "recipe-add";
+
+    public static final String ADDED_RECIPES_PAGE_VIEW_NAME = "recipes-added";
+
+    public static final String LIKED_RECIPES_PAGE_VIEW_NAME = "recipes-liked";
+
+    public static final String SAVED_RECIPES_PAGE_VIEW_NAME = "recipes-saved";
+
+    public static final String COOKED_RECIPES_PAGE_VIEW_NAME = "recipes-cooked";
 }
