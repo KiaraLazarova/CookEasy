@@ -173,7 +173,7 @@ public class UserServiceImpl implements UserService {
         RoleEntity adminRole = this.roleService.findRoleByRoleName(RoleNameEnum.ADMIN);
         user.getRoles().add(adminRole);
 
-        this.updateUserDetailsObject(user);
+        this.userRepository.saveAndFlush(user);
     }
 
     @Override
