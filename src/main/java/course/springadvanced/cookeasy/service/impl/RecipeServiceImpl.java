@@ -373,7 +373,17 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public List<RecipeBriefDescriptionViewModel> getAddedRecipesBriefDescriptions(String username) {
         UserEntity author = this.userService.findUserByUsername(username);
-        List<RecipeEntity> addedRecipes = author.getAddedRecipes();
+        List<RecipeEntity> addedRecipes = author
+                .getAddedRecipes()
+                .stream()
+                .sorted((x, y) -> {
+                    int res = x.getCategoryEntity().getId().compareTo(y.getCategoryEntity().getId());
+
+                    if(res == 0) res = y.getCreatedOn().compareTo(x.getCreatedOn());
+
+                    return res;
+                })
+                .collect(Collectors.toList());
 
         return addedRecipes
                 .stream()
@@ -384,7 +394,17 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public List<RecipeBriefDescriptionViewModel> getLikedRecipesBriefDescriptions(String username) {
         UserEntity author = this.userService.findUserByUsername(username);
-        List<RecipeEntity> likedRecipes = author.getLikedRecipes();
+        List<RecipeEntity> likedRecipes = author
+                .getLikedRecipes()
+                .stream()
+                .sorted((x, y) -> {
+                    int res = x.getCategoryEntity().getId().compareTo(y.getCategoryEntity().getId());
+
+                    if(res == 0) res = y.getCreatedOn().compareTo(x.getCreatedOn());
+
+                    return res;
+                })
+                .collect(Collectors.toList());
 
         return likedRecipes
                 .stream()
@@ -395,7 +415,17 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public List<RecipeBriefDescriptionViewModel> getSavedRecipesBriefDescriptions(String username) {
         UserEntity author = this.userService.findUserByUsername(username);
-        List<RecipeEntity> savedRecipes = author.getSavedRecipes();
+        List<RecipeEntity> savedRecipes = author
+                .getSavedRecipes()
+                .stream()
+                .sorted((x, y) -> {
+                    int res = x.getCategoryEntity().getId().compareTo(y.getCategoryEntity().getId());
+
+                    if(res == 0) res = y.getCreatedOn().compareTo(x.getCreatedOn());
+
+                    return res;
+                })
+                .collect(Collectors.toList());
 
         return savedRecipes
                 .stream()
@@ -406,7 +436,17 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public List<RecipeBriefDescriptionViewModel> getCookedRecipesBriefDescriptions(String username) {
         UserEntity author = this.userService.findUserByUsername(username);
-        List<RecipeEntity> cookedRecipes = author.getCookedRecipes();
+        List<RecipeEntity> cookedRecipes = author
+                .getCookedRecipes()
+                .stream()
+                .sorted((x, y) -> {
+                    int res = x.getCategoryEntity().getId().compareTo(y.getCategoryEntity().getId());
+
+                    if(res == 0) res = y.getCreatedOn().compareTo(x.getCreatedOn());
+
+                    return res;
+                })
+                .collect(Collectors.toList());
 
         return cookedRecipes
                 .stream()
