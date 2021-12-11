@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head">
+</head>
+
+<body>
+        <!--Main Navigation-->
+    <header>
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" th:replace="fragments/navbar :: navbar">
+      </nav>
+      <!-- Navbar -->
+
+      <!-- Background image -->
+      <div id="introHalf" class="bg-image shadow-2-strong">
+        <div class="mask">
+          <div class="container d-flex justify-content-center align-items-center h-100">
+            <div class="text-white text-center">
+              <br>
+              <br>
+              <h1 class="mb-3">Our story and mission</h1>
+              <h5 class="mb-4"><img th:src="@{/images/cook_easy_motto.png}" style="width: 100%; height: 100%"></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Background image -->
+    </header>
+    <!--Main Navigation-->
+
+    <!--Main layout-->
+    <main class="mt-5">
+      <div class="container">
+        <!--Section: Content-->
+        <section class="text-center">
+          <!-- Recipe -->
+          <div class="row mt-3 align-content-center">
+              <div class="bg-image hover-overlay rounded ripple" data-mdb-ripple-color="light">
+                  <img th:src="@{/images/cook_easy_logo.jpg}" class="img-fluid" />
+              </div>
+          </div>
+          <div class="row custom-row-outline mt-3" style="background-color: rgba(154, 209, 230, 0.1)">
+              <p class="custom-text-justify"><i style="color: #9AD1E6;"><strong><u>Cook Easy</u></strong></i> is a web application for sharing a vast range of recipes. Its goal is to preserve traditional and not so traditional recipes and stimulate people's desire to consume more homemade food. It is clear from its name that cooking does not have to be difficult. In addition, the design is specifically made to be accessible, understandable and easy to navigate for the end user. This is why <strong style="color: #f58b8d;">"Cooking with <i style="color: #9AD1E6;"><u>Cook Easy</u></i> is TaStY, EaSY, IntEReStInG"</strong>.</p>
+          </div>
+
+          <hr class="my-5" />
+
+          <div class="row custom-pink-row-outline mt-3" style="background-color: rgba(245, 139, 141, 0.1)">
+              <p class="text-center"><strong><u>Created by:</u></strong> <i>Kiara Lazarova</i></p>
+              <p class="text-center"><strong><u>Created on:</u></strong> <i>03.12.2021</i></p>
+              <p class="text-center"><strong><u>Contact me:</u></strong> <a href="https://github.com/KiaraLazarova" target="_blank"><i>My GitHub Account</i></a></p>
+          </div>
+        </section>
+      </div>
+    </main>
+    <!--Main layout-->
+
+    <br>
+    <br>
+    <hr class="m-0" />
+
+    <!--Footer-->
+    <footer class="bg-light text-lg-start" th:replace="fragments/footer :: footer">
+    </footer>
+    <!--Footer-->
+
+    <!-- MDB -->
+    <script type="text/javascript" src="/js/mdb.min.js"></script>
+</body>
+</html>

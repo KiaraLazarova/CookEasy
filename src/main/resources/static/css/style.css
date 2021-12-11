@@ -121,6 +121,12 @@
     padding: 20px; !important;
 }
 
+.custom-pink-row-outline {
+    border: 3px solid #f58b8d; !important;
+    border-radius: 5px; !important;
+    padding: 20px; !important;
+}
+
 /* Error pages */
 .error-content {
     padding: 0 0 70px;
