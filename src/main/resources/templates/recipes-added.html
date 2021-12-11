@@ -39,11 +39,8 @@
           <!-- Recipe -->
           <div th:each="viewModel : ${viewModels}" th:object="${viewModel}" class="row custom-row-outline mt-3">
             <div class="col-md-4 mb-4">
-              <div class="bg-image hover-overlay shadow-1-strong rounded ripple" data-mdb-ripple-color="light">
-                <img src="https://mdbootstrap.com/img/new/standard/nature/002.jpg" class="img-fluid" />
-                <a href="#">
-                  <div class="mask"></div>
-                </a>
+              <div class="bg-image hover-overlay rounded ripple" data-mdb-ripple-color="light">
+                <img th:src="@{'/images/' + *{#strings.toLowerCase(categoryEntity.categoryNameEnum.name())} + '.png'}" class="img-fluid" />
               </div>
             </div>
 
