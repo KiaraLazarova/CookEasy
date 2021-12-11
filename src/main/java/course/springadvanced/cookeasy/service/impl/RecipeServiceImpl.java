@@ -217,7 +217,7 @@ public class RecipeServiceImpl implements RecipeService {
         UserEntity author = this.userService.findUserByUsername(username);
         Long levelId = author.getLevelEntity().getId();
 
-        return this.recipeRepository.findAllByLevelEntityByOrderByCategoryNameEnumAsc(levelId)
+        return this.recipeRepository.findAllByLevelEntityByOrderByCategoryIdAsc(levelId)
                 .stream()
                 .map(this::mapToRecipeBriefDescriptionViewModel)
                 .collect(Collectors.toList());
