@@ -2,7 +2,6 @@ package course.springadvanced.cookeasy.constant;
 
 import course.springadvanced.cookeasy.model.entity.enumeration.GenderNameEnum;
 import course.springadvanced.cookeasy.model.entity.enumeration.LevelNameEnum;
-
 import java.time.LocalDateTime;
 
 public class GlobalTestConstants {
@@ -10,9 +9,9 @@ public class GlobalTestConstants {
 
     public static final String LAST_NAME = "Lazarova";
 
-    public static final String USERNAME = "kalina_lazarova";
+    public static final String USERNAME = "1b9e03f7a7a08fcb15cf";
 
-    public static final String EMAIL = "kalina_lazarova@gmail.com";
+    public static final String EMAIL = "1b9e03f7a7a08fcb15cf@gmail.com";
 
     public static final String PASSWORD = "12345";
 
@@ -75,4 +74,6 @@ public class GlobalTestConstants {
     public static final String SAVED_RECIPES_PAGE_VIEW_NAME = "recipes-saved";
 
     public static final String COOKED_RECIPES_PAGE_VIEW_NAME = "recipes-cooked";
+
+    public static final String ABOUT_PAGE_VIEW_NAME = "about";
 }
