@@ -141,7 +141,8 @@ public class RecipeController {
     public String editRecipe(@PathVariable(name = "id") Long id,
                              @Valid RecipeEditBindingModel recipeEditBindingModel,
                              BindingResult bindingResult,
-                             RedirectAttributes redirectAttributes) {
+                             RedirectAttributes redirectAttributes,
+                             Principal principal) {
         if(bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("editBindingModel", recipeEditBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editBindingModel", bindingResult);
@@ -158,7 +159,7 @@ public class RecipeController {
 
     @PreAuthorize("@recipeServiceImpl.isRecipeOwner(#principal.name, #id)")
     @DeleteMapping(value = "/recipes/{id}/details/delete")
-    public String deleteRecipe(@PathVariable(name = "id") Long id) {
+    public String deleteRecipe(@PathVariable(name = "id") Long id, Principal principal) {
         this.recipeService.deleteRecipe(id);
 
         return "redirect:/recipes";
