@@ -37,3 +37,24 @@
 * It uses **ModelMapper** mapping library.
 
 * It has **Unit** and **Integration** tests that cover **63 %** of its business logic.
+
+***
+
+### Cook Easy follows the best practices for Object-Oriented design and high-quality code for the web application:
+* It uses **data encapsulation**.
+
+* It uses **exception handling** properly.
+
+* It uses **inheritance**, **abstraction** and **polymorphism** properly.
+
+* It follows the **principles** of **strong cohesion** and **loose coupling**.
+
+* The code is correctly **formatted** and **structured** in order to be **readable**.
+
+* It has multiple **layers**: _database_ layer, _repository_ layer, _service_ layer and _web_ layer. Each of the above-mentioned layers interact with the layer below.
+
+* It follows the **MVC pattern** (Model-View-Controller pattern).
+
+* It follows the **SOLID principles** (Single-responsibility Principle, Open-closed Principle, Liskov Substitution Principle, Interface Segregation Principle, Dependency 	   Inversion Principle).
+
+* It follows the concept of **thin controllers**.
