@@ -3,8 +3,13 @@ package course.springadvanced.cookeasy.model.binding;
 import course.springadvanced.cookeasy.model.entity.enumeration.CategoryNameEnum;
 import course.springadvanced.cookeasy.model.entity.enumeration.LevelNameEnum;
 import course.springadvanced.cookeasy.util.annotation.UniqueRecipeTitle;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.*;
 
+@Data
+@NoArgsConstructor
 public class RecipeAddBindingModel {
     @NotBlank
     @UniqueRecipeTitle
@@ -25,55 +30,4 @@ public class RecipeAddBindingModel {
     @NotBlank
     @Size(min = 10)
     private String description;
-
-    public RecipeAddBindingModel() {
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public int getHours() {
-        return this.hours;
-    }
-
-    public void setHours(int hours) {
-        this.hours = hours;
-    }
-
-    public int getMinutes() {
-        return this.minutes;
-    }
-
-    public void setMinutes(int minutes) {
-        this.minutes = minutes;
-    }
-
-    public CategoryNameEnum getCategoryNameEnum() {
-        return this.categoryNameEnum;
-    }
-
-    public void setCategoryNameEnum(CategoryNameEnum categoryNameEnum) {
-        this.categoryNameEnum = categoryNameEnum;
-    }
-
-    public LevelNameEnum getLevelNameEnum() {
-        return this.levelNameEnum;
-    }
-
-    public void setLevelNameEnum(LevelNameEnum levelNameEnum) {
-        this.levelNameEnum = levelNameEnum;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }
