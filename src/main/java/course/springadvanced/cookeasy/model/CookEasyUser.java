@@ -2,12 +2,12 @@ package course.springadvanced.cookeasy.model;
 
 import course.springadvanced.cookeasy.model.entity.GenderEntity;
 import course.springadvanced.cookeasy.model.entity.LevelEntity;
-import course.springadvanced.cookeasy.model.entity.RecipeEntity;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
-import java.util.List;
 
+@Getter
 public class CookEasyUser extends User {
     private final Long id;
     private final String firstName;
@@ -39,29 +39,5 @@ public class CookEasyUser extends User {
         this.email = email;
         this.genderEntity = genderEntity;
         this.levelEntity = levelEntity;
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public String getFirstName() {
-        return this.firstName;
-    }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public GenderEntity getGenderEntity() {
-        return this.genderEntity;
-    }
-
-    public LevelEntity getLevelEntity() {
-        return this.levelEntity;
     }
 }
