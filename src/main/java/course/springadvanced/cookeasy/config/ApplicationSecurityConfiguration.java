@@ -42,7 +42,11 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                     .logoutUrl("/users/logout")
                     .logoutSuccessUrl("/")
                     .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID");
+                    .deleteCookies("JSESSIONID")
+                .and()
+                    .rememberMe()
+                    .key("uniqueKey1231@#")
+                    .tokenValiditySeconds(604800);
     }
 
     @Override

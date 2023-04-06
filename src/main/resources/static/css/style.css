@@ -103,7 +103,7 @@
     background-color: rgba(0, 0, 0, 0); !important;
 }
 
-/* Custom line height validation messages - auth-register page */
+/* Custom line height validation messages - auth-login and register page */
 .custom-line-height {
     line-height: 0.5; !important;
 }
