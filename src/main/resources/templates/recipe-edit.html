@@ -51,7 +51,7 @@
                     <div class="form-outline">
                       <select th:field="*{categoryNameEnum}" id="category" class="browser-default custom-select form-select" required aria-describedby="categoryHelpInline">
                         <option value="" selected>Choose category</option>
-                        <option th:each="category : ${T(course.springadvanced.cookeasy.model.entity.enumeration.CategoryNameEnum).values()}"
+                        <option th:each="category : ${T(com.cookeasy.model.entity.enumeration.CategoryNameEnum).values()}"
                               th:value="${category}" th:text="${#strings.toLowerCase(category)}"></option>
                       </select>
                     </div>
@@ -61,7 +61,7 @@
                     <div class="form-outline">
                       <select th:field="*{levelNameEnum}" id="recipeLevel" class="browser-default custom-select form-select" required aria-describedby="levelHelpInline">
                         <option value="" selected>Choose level</option>
-                        <option th:each="level : ${T(course.springadvanced.cookeasy.model.entity.enumeration.LevelNameEnum).values()}"
+                        <option th:each="level : ${T(com.cookeasy.model.entity.enumeration.LevelNameEnum).values()}"
                                 th:value="${level}" th:text="${#strings.toLowerCase(level)}"
                                 th:attr="disabled=${level != #authentication.principal.levelEntity.levelNameEnum ? 'disabled' : null}">
                         </option>

@@ -78,7 +78,7 @@
                     <div class="form-outline">
                       <select th:field="*{genderNameEnum}" id="gender" class="browser-default custom-select form-select" required aria-describedby="genderHelpInline">
                         <option value="" selected>Choose gender</option>
-                        <option th:each="gender : ${T(course.springadvanced.cookeasy.model.entity.enumeration.GenderNameEnum).values()}"
+                        <option th:each="gender : ${T(com.cookeasy.model.entity.enumeration.GenderNameEnum).values()}"
                               th:value="${gender}" th:text="${#strings.toLowerCase(gender)}"></option>
                       </select>
                     </div>
@@ -88,7 +88,7 @@
                     <div class="form-outline">
                       <select th:field="*{levelNameEnum}" id="level" class="browser-default custom-select form-select" required aria-describedby="levelHelpInline">
                         <option value="" selected>Choose level</option>
-                        <option th:each="level : ${T(course.springadvanced.cookeasy.model.entity.enumeration.LevelNameEnum).values()}"
+                        <option th:each="level : ${T(com.cookeasy.model.entity.enumeration.LevelNameEnum).values()}"
                               th:value="${level}" th:text="${#strings.toLowerCase(level)}"></option>
                       </select>
                     </div>
