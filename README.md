@@ -47,8 +47,6 @@
 
 * It uses **inheritance**, **abstraction** and **polymorphism** properly.
 
-* It follows the **principles** of **strong cohesion** and **loose coupling**.
-
 * The code is correctly **formatted** and **structured** in order to be **readable**.
 
 * It has multiple **layers**: _database_ layer, _repository_ layer, _service_ layer and _web_ layer. Each of the above-mentioned layers interact with the layer below.
