@@ -36,7 +36,7 @@
 
 * It uses **ModelMapper** mapping library.
 
-* It has **Unit** and **Integration** tests that cover **63 %** of its business logic.
+* It has **Unit** and **Integration** tests that cover around **60 %** of its business logic.
 
 ***
 
